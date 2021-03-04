@@ -27,5 +27,36 @@ Specifically,
 3. To share art pieces and codes that can be reused in future projects of students.
 VII. System Design
 1. System Flowchart
+
+
 ![image](https://user-images.githubusercontent.com/80024693/109927562-5df87200-7cff-11eb-8f11-21f9b84e9e95.png)
+![image](https://user-images.githubusercontent.com/80024693/109927668-854f3f00-7cff-11eb-8c6d-8e4a0d607d77.png)
+![image](https://user-images.githubusercontent.com/80024693/109927697-9009d400-7cff-11eb-9774-779f83ecd86e.png)
+![image](https://user-images.githubusercontent.com/80024693/109927730-9ac46900-7cff-11eb-9b11-9ab31511d2f6.png)
+
+
+
+
+The forum is exclusive for the students, professors, staff of Far Eastern University only (all branch). It is required to use
+the feu email account to have an access to the forum. Other users who are not under the institution cannot access or
+create an account. Users can post their output/artwork such as: digital arts, drawing, programming questions, source
+code, and etc. as long as the topic should circulate to computer studies related only. The name of the user can be hidden
+so that there's no hierarchy, so that the users can ask recommend or advice, add comments and such. For those who
+disobey the terms and condition will receive a warning from the admin if there's an obscenity and pornography words or
+photographs that will be posted.
+Users
+➢ Create an account using FEU email
+➢ An internet browser is used to use this app.
+➢ Can post as long as it is under the approved context of the forum
+➢ Reply to comments on posts
+➢ Delete their own posts/comments
+Admins
+➢ Can post and pin posts to serve as announcements
+➢ Reply to posts and comments
+➢ Delete comments/posts deemed to be inappropriate.
+➢ Mute a user if he/she has not followed the rules. Ban if another violation occurred.
+➢ Have a list of users, list of users who are muted.
+➢ Can mute and unmute users.
+
+
 
