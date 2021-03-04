@@ -1,4 +1,3 @@
 # dong
 kita niyo>?
-itlogers
-niggers
+comment - ROn Lara
