@@ -109,7 +109,7 @@
     $title = $_POST['title'];
     $post = $_POST['post'];
 	$email = $_COOKIE['email'];
-    $sql = "INSERT INTO forums(title, post, email_user)
+    $sql = "INSERT INTO forum(title, post, email_user)
                         VALUES('$title', '$post', '$email')";
     $insert = mysqli_query($conn,$sql);
 	echo $title."<br>";
