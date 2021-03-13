@@ -86,6 +86,7 @@
         <a href="forumtest.php">Forum Test</a>
         <a href="forumpost.php">Forum Post</a>
         <a href="forumdisp.php">Forum Display</a>
+		<a href="display_all.php">Display All Helpful</a>
       </div>
 	</div> 
   </div>
