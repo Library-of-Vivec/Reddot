@@ -104,7 +104,7 @@
 	}
 	//DISPLAY USERNAME AND PROFILE PIC
 	
-  $sql = "SELECT title FROM forums";
+  $sql = "SELECT title FROM forum";
   $result = mysqli_query($conn, $sql);
   #echo "<form action=\"forumpost.php\" method=\"post\">";
   #echo "<input type=\"submit\" name=\"submit\" value=\"".$value"\">".$value."</a><br></form>";
