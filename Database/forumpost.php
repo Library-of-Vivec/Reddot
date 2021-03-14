@@ -145,16 +145,14 @@
     include 'config.php';
     $sql = "SELECT title, post ,email_user FROM forum WHERE id = '$id'";
     $result = mysqli_query($conn, $sql);
-    $emailfrdb;
-    while($row = mysqli_fetch_assoc($result)){
-      $emailfrdb = $row['email_user'];
-    }
+    $sqlemail = "SELECT email_user FROM forum WHERE id = '$id'";
+    $emailres = mysqli_query($conn, $sqlemail);
+    $emailfrdb = mysqli_fetch_assoc($emailres)['email_user'];
     if($emailfrdb == $_COOKIE['email']){
       echo "<form action='' method = 'post'>";
       echo "<input type = 'submit' name = 'delpost' value = 'Delete'></input>";
       echo "</form>";
     }
-
     if(isset($_POST['delpost'])){
       $sqldel = "DELETE FROM forum WHERE id = '$id'";
       $delres = mysqli_query($conn,$sqldel);
@@ -173,6 +171,7 @@
         break;
       }
     }
+
 ?>
 
 <?php
