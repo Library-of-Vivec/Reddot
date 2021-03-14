@@ -46,9 +46,7 @@
 	}
   .navbar{
     border-color:black;
-    border-bottom: inset;
-    border-width: 100%;
-    border-right: inset;
+    border-style: solid;
   }
   button{
     transition-duration: 0.5s;
@@ -177,7 +175,7 @@
 		}
 	}
 ?>
-
+</div>
 <?php
     $sql = "SELECT username, comment FROM comment WHERE title = '$title'";
     $result = mysqli_query($conn, $sql);
