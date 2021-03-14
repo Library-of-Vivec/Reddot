@@ -7,6 +7,17 @@
   <script src="functions.js"></script>
 
   <style>
+  @keyframes growDown {
+  0% {
+    transform: scaleY(0)
+  }
+  80% {
+    transform: scaleY(1.1)
+  }
+  100% {
+    transform: scaleY(1)
+  }
+}
 	body {
 	  font-family: Arial, Helvetica, sans-serif;
 	}
@@ -15,8 +26,9 @@
 	  float: left;
 	  overflow: hidden;
 	}
-
-
+  .dropbtn{
+    width:177px;
+  }
 	.dropdown-content {
 	  display: none;
 	  position: absolute;
@@ -42,11 +54,14 @@
 	}
 
 	.dropdown:hover .dropdown-content {
+    animation: growDown 500ms ease-in-out forwards;
+    transform-origin: top center;
 	  display: block;
 	}
   .navbar{
     border-color:black;
     border-style: solid;
+    text-align: right;
   }
   button{
     transition-duration: 0.5s;
@@ -107,6 +122,7 @@
   <a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
+
   <!-- MENU TAB DROPDOWN-->
 <?php
 	include 'config.php';
@@ -121,6 +137,7 @@
 		echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
+  echo "</div>";
 	//DISPLAY USERNAME AND PROFILE PIC
 
   $sql = "SELECT title, email_user, post, id FROM forum";
@@ -161,6 +178,7 @@
 
     }
   }
+
 
   if(isset($_POST['delsub'])){
     foreach($_POST['checkdelete'] as $selected) {
