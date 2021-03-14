@@ -46,9 +46,7 @@
 	}
   .navbar{
     border-color:black;
-    border-bottom: inset;
-    border-width: 100%;
-    border-right: inset;
+    border-style: solid;
   }
   button{
     transition-duration: 0.5s;
@@ -127,7 +125,9 @@
 	    }
 	}
 	//DISPLAY USERNAME AND PROFILE PIC
-
+?>
+</div>
+<?php
   $sql = "SELECT title FROM forum";
   $result = mysqli_query($conn, $sql);
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph"){
