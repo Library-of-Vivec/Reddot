@@ -5,7 +5,7 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-
+  
   <style>
 	body {
 	  font-family: Arial, Helvetica, sans-serif;
@@ -65,9 +65,8 @@
   }
 </style>
   </head>
-  <body>
+<body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -80,23 +79,21 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-
+	
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
-		gapi.auth2.getAuthInstance().signOut().then(function(){
-			console.log('user signed out')
-		})
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.disconnect();
 		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-
-	}
+		
+	} 
 	///////////////////////////////////////////////
-
+	
   </script>
-
-  <!-- MENU TAB DROPDOWN-->
+    <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
     <button onclick ="signOut()" class="sign_out">Sign Out</button>
 	<div class="dropdown">
@@ -128,9 +125,9 @@
 ?>
 
 <?php
-    $title = $_GET['title'];
+    $id = $_GET['post_id'];
     include 'config.php';
-    $sql = "SELECT title, post ,email_user FROM forum WHERE title = '$title'";
+    $sql = "SELECT title, post ,email_user FROM forum WHERE id = '$id'";
     $result = mysqli_query($conn, $sql);
 	    while($row = mysqli_fetch_assoc($result)){
       foreach($row as $key => $value){
@@ -144,7 +141,7 @@
 ?>
 
 <?php
-    $sql = "SELECT likes FROM forum WHERE title = '$title'";
+    $sql = "SELECT likes FROM forum WHERE id = '$id'";
     $like = mysqli_query($conn, $sql);
 	$numlikes = mysqli_fetch_assoc($like);
 	$sql = "SELECT username from account WHERE email='".$email."'";
@@ -152,7 +149,7 @@
 	$unameres = mysqli_fetch_assoc($unamesql);
 	echo "<h4>Number of helpfulness: ".$numlikes['likes']."</h4>";
 	$uname = $unameres['username'];
-	$sql = "SELECT * FROM likes WHERE username = '$uname' AND title = '$title'";
+	$sql = "SELECT * FROM likes WHERE username = '$uname' AND post_id = '$id'";
 	$likes = mysqli_query($conn, $sql);
 ?>
 
@@ -166,10 +163,10 @@
 	}
 	else {
 		if(isset($_POST['like'])){
-			$sql = "UPDATE forum SET likes = likes + 1 WHERE title = '$title'";
+			$sql = "UPDATE forum SET likes = likes + 1 WHERE id = '$id'";
 			$likes = mysqli_query($conn, $sql);
-			$sql = "INSERT INTO likes(username, title)
-                        VALUES('$uname', '$title')";
+			$sql = "INSERT INTO likes(username, post_id)
+                        VALUES('$uname', '$id')";
 			$likes = mysqli_query($conn, $sql);
 			echo "<meta http-equiv='refresh' content='0'>";
 		}
@@ -177,7 +174,7 @@
 ?>
 </div>
 <?php
-    $sql = "SELECT username, comment FROM comment WHERE title = '$title'";
+    $sql = "SELECT username, comment FROM comment WHERE post_id = '$id'";
     $result = mysqli_query($conn, $sql);
 	echo "<h3>Comments section: </h3>";
     while($row = mysqli_fetch_assoc($result)){
@@ -192,8 +189,9 @@
 <?php
   if(isset($_POST['submit'])){
     $comment = $_POST['comment'];
-    $sql = "INSERT INTO comment(title, username, comment)
-                        VALUES('$title', '$uname', '$comment')";
+	$comment = htmlspecialchars($comment, ENT_QUOTES);
+    $sql = "INSERT INTO comment(post_id, username, comment)
+                        VALUES('$id', '$uname', '$comment')";
     $insert = mysqli_query($conn,$sql);
 
     if($insert){
@@ -204,8 +202,9 @@
     }
   }
 ?>
-
+ 
 <form action="" method="post">
   <textarea name="comment" placeholder="Comment here" rows="5" cols="100" style="resize:none"></textarea><br>
   <input type="submit" name="submit" value="Submit"></input>
 </form>
+

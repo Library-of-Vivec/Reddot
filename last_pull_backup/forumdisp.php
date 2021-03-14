@@ -46,8 +46,9 @@
 	}
   .navbar{
     border-color:black;
-    border-style: solid;
-    text-align: right;
+    border-bottom: inset;
+    border-width: 100%;
+    border-right: inset;
   }
   button{
     transition-duration: 0.5s;
@@ -68,6 +69,7 @@
   </head>
   <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
+
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -83,12 +85,14 @@
 
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
-		var auth2 = gapi.auth2.getAuthInstance();
-		auth2.disconnect();
+		gapi.auth2.getAuthInstance().signOut().then(function(){
+			console.log('user signed out')
+		})
 		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
+
 	}
 	///////////////////////////////////////////////
 
@@ -109,9 +113,8 @@
       </div>
 	</div>
   <!-- MENU TAB DROPDOWN-->
-
-  <?php
-    include 'config.php';
+<?php
+	include 'config.php';
 	//DISPLAY USERNAME AND PROFILE PIC
     echo $_COOKIE["email"]."</br>";
 	$email = $_COOKIE['email'];
@@ -124,7 +127,36 @@
 	    }
 	}
 	//DISPLAY USERNAME AND PROFILE PIC
-  ?>
 
-  </body>
- </html>
+  $sql = "SELECT title FROM forum";
+  $result = mysqli_query($conn, $sql);
+  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph"){
+    echo "admin page<br>";
+    echo "<form action = '' method = 'post'>";
+    while($row = mysqli_fetch_assoc($result)){
+      foreach($row as $key => $value){
+        echo $value;
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$value."\"><a href='forumpost.php?title=$value'>".$value."</input></a><br>";
+      }
+    }
+    echo "<input type='submit' name = 'delsub' value = 'Delete'>";
+    echo "</form>";
+  }
+  else{
+    echo "user page <br>";
+    while($row = mysqli_fetch_assoc($result)){
+      foreach($row as $key => $value){
+        echo "<a href='forumpost.php?title=$value'>".$value."</a><br>";
+      }
+    }
+  }
+
+  if(isset($_POST['delsub'])){
+    foreach($_POST['checkdelete'] as $selected) {
+      echo $selected;
+        $sqldel = "DELETE FROM forum WHERE title = '$selected'";
+        $delres = mysqli_query($conn,$sqldel);
+}
+  }
+
+ ?>

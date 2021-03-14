@@ -46,8 +46,9 @@
 	}
   .navbar{
     border-color:black;
-    border-style: solid;
-    text-align: right;
+    border-bottom: inset;
+    border-width: 100%;
+    border-right: inset;
   }
   button{
     transition-duration: 0.5s;
@@ -68,6 +69,7 @@
   </head>
   <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
+
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -83,12 +85,14 @@
 
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
-		var auth2 = gapi.auth2.getAuthInstance();
-		auth2.disconnect();
+		gapi.auth2.getAuthInstance().signOut().then(function(){
+			console.log('user signed out')
+		})
 		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
+
 	}
 	///////////////////////////////////////////////
 
@@ -110,8 +114,8 @@
 	</div>
   <!-- MENU TAB DROPDOWN-->
 
-  <?php
-    include 'config.php';
+<?php
+	include 'config.php';
 	//DISPLAY USERNAME AND PROFILE PIC
     echo $_COOKIE["email"]."</br>";
 	$email = $_COOKIE['email'];
@@ -123,8 +127,23 @@
 		echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
-	//DISPLAY USERNAME AND PROFILE PIC
-  ?>
 
-  </body>
- </html>
+?>
+
+<?php
+    include 'config.php';
+	$sql = "SELECT username from account WHERE email='".$email."'";
+	$unamesql = mysqli_query($conn, $sql);
+	$unameres = mysqli_fetch_assoc($unamesql);
+	$uname = $unameres['username'];
+  $sql = "SELECT title FROM likes WHERE username = '$uname'";
+	$titlesql = mysqli_query($conn, $sql);
+	$titleres = mysqli_fetch_assoc($titlesql);
+//	$title = $titleres['title'];
+    $result = mysqli_query($conn, $sql);
+	while($row = mysqli_fetch_assoc($result)){
+		foreach($row as $key => $value){
+			echo "<a href='forumpost.php?title=$value'>".$value."</a><br>";
+      }
+    }
+?>

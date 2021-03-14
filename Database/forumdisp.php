@@ -65,9 +65,8 @@
   }
 </style>
   </head>
-  <body>
+<body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -83,9 +82,8 @@
 
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
-		gapi.auth2.getAuthInstance().signOut().then(function(){
-			console.log('user signed out')
-		})
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.disconnect();
 		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
@@ -95,8 +93,7 @@
 	///////////////////////////////////////////////
 
   </script>
-
-  <!-- MENU TAB DROPDOWN-->
+    <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
     <button onclick ="signOut()" class="sign_out">Sign Out</button>
 	<div class="dropdown">
@@ -125,19 +122,24 @@
 	    }
 	}
 	//DISPLAY USERNAME AND PROFILE PIC
-?>
-</div>
-<?php
-  $sql = "SELECT title FROM forum";
+
+  $sql = "SELECT title, email_user, post, id FROM forum";
   $result = mysqli_query($conn, $sql);
-  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph"){
+  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
     echo "admin page<br>";
     echo "<form action = '' method = 'post'>";
     while($row = mysqli_fetch_assoc($result)){
-      foreach($row as $key => $value){
-        echo $value;
-        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$value."\"><a href='forumpost.php?title=$value'>".$value."</input></a><br>";
-      }
+		echo "<div class=\"posts\">";
+		$value = $row["id"];
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["title"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
+		if(strlen($row["post"]) > 198){
+			echo "<p>".substr($row["post"], 0,198)."...</p>";
+		}
+		else{
+			echo "<p>".$row["post"]."</p>";
+		}
+		echo "<p>posted by: ".$row["email_user"]."</p></div>";
+
     }
     echo "<input type='submit' name = 'delsub' value = 'Delete'>";
     echo "</form>";
@@ -145,9 +147,18 @@
   else{
     echo "user page <br>";
     while($row = mysqli_fetch_assoc($result)){
-      foreach($row as $key => $value){
-        echo "<a href='forumpost.php?title=$value'>".$value."</a><br>";
-      }
+
+		echo "<div class=\"posts\">";
+		$value = $row["id"];
+        echo "<a href='forumpost.php?post_id=$value'>".$row["title"]."</a><br>";
+		if(strlen($row["post"]) > 198){
+			echo "<p>".substr($row["post"], 0,198)."...</p>";
+		}
+		else{
+			echo "<p>".$row["post"]."</p>";
+		}
+		echo "<p>posted by: ".$row["email_user"]."</p></div>";
+
     }
   }
 
@@ -156,7 +167,12 @@
       echo $selected;
         $sqldel = "DELETE FROM forum WHERE title = '$selected'";
         $delres = mysqli_query($conn,$sqldel);
+		$sqldel2 = "DELETE FROM likes WHERE title = '$selected'";
+		$delres2 = mysqli_query($conn,$sqldel2);
+		$sqldel3 = "DELETE FROM comment WHERE title = '$selected'";
+		$delres3 = mysqli_query($conn,$sqldel3);
 }
+	header("Refresh:0");
   }
 
  ?>

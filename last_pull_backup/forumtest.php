@@ -46,8 +46,9 @@
 	}
   .navbar{
     border-color:black;
-    border-style: solid;
-    text-align: right;
+    border-bottom: inset;
+    border-width: 100%;
+    border-right: inset;
   }
   button{
     transition-duration: 0.5s;
@@ -68,6 +69,7 @@
   </head>
   <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
+
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -83,12 +85,14 @@
 
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
-		var auth2 = gapi.auth2.getAuthInstance();
-		auth2.disconnect();
+		gapi.auth2.getAuthInstance().signOut().then(function(){
+			console.log('user signed out')
+		})
 		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
+
 	}
 	///////////////////////////////////////////////
 
@@ -102,16 +106,15 @@
 	  <i class="fa fa-caret-down"></i>
 	  </button>
 	  <div class="dropdown-content">
-      <a href="landingpage.php">Home</a>
-      <a href="forumtest.php">Create Post</a>
-      <a href="forumdisp.php">See Posts</a>
-  <a href="display_all.php">See all Helpful Posts</a>
+        <a href="landingpage.php">Home</a>
+        <a href="forumtest.php">Create Post</a>
+        <a href="forumdisp.php">See Posts</a>
+		<a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
   <!-- MENU TAB DROPDOWN-->
-
-  <?php
-    include 'config.php';
+<?php
+	include 'config.php';
 	//DISPLAY USERNAME AND PROFILE PIC
     echo $_COOKIE["email"]."</br>";
 	$email = $_COOKIE['email'];
@@ -124,7 +127,32 @@
 	    }
 	}
 	//DISPLAY USERNAME AND PROFILE PIC
-  ?>
 
-  </body>
- </html>
+
+  if(isset($_POST['submit'])){
+    $title = $_POST['title'];
+    $post = $_POST['post'];
+	$email = $_COOKIE['email'];
+    $sql = "INSERT INTO forum(title, post, email_user)
+                        VALUES('$title', '$post', '$email')";
+    $insert = mysqli_query($conn,$sql);
+	echo $title."<br>";
+	echo $post."<br>";
+	echo $email."<br>";
+    if($insert){
+      echo "post success";
+    }
+    else{
+      echo "Post could not be made.";
+    }
+  }
+
+ ?>
+
+<form action="" method="post">
+  <input type="text" name="title" placeholder="Title here"></input><br>
+  <textarea name="post" placeholder="Post here" rows="5" cols="100" style="resize:none"></textarea><br>
+  <input type="submit" name="submit" value="Submit"></input>
+</form>
+</body>
+</html>

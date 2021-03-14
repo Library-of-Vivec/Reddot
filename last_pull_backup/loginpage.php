@@ -21,8 +21,9 @@
 		   location.replace("loginpage.php");
 		}
 		else{
-		  var auth2 = gapi.auth2.getAuthInstance();
-		  auth2.disconnect();
+		  gapi.auth2.getAuthInstance().signOut().then(function() {
+			console.log('user signed out')
+		  })
 		  ////DELETE COOKIE AFTER WRONG ENTRY/////
           document.cookie = "email=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		  document.cookie = "reg=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
