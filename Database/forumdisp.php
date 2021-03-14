@@ -27,6 +27,7 @@
 	}
 
 	.dropdown-content a {
+    transition-duration: 0.5s;
 	  float: none;
 	  color: black;
 	  padding: 12px 16px;
@@ -36,17 +37,39 @@
 	}
 
 	.dropdown-content a:hover {
+    transition-duration: 0.5s;
 	  background-color: #ddd;
 	}
 
 	.dropdown:hover .dropdown-content {
 	  display: block;
 	}
+  .navbar{
+    border-color:black;
+    border-bottom: inset;
+    border-width: 100%;
+    border-right: inset;
+  }
+  button{
+    transition-duration: 0.5s;
+    background-color:grey;
+    border-style: none;
+    padding: 15px 32px;
+  }
+  button:hover{
+    transition-duration: 0.5s;
+    background-color:white;
+    border-style: none;
+    padding: 15px 32px;
+  }
+  .sign_out{
+    float: right;
+  }
 </style>
   </head>
-<body>
+  <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-	<button onclick ="signOut()">Sign Out</button>
+
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -74,20 +97,21 @@
 	///////////////////////////////////////////////
 
   </script>
-    <!-- MENU TAB DROPDOWN-->
+
+  <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
-    <a href="landingpage.php">FEU COMMUNITY FORUM</a>
+    <button onclick ="signOut()" class="sign_out">Sign Out</button>
 	<div class="dropdown">
 	<button class="dropbtn">Menu Tabs
 	  <i class="fa fa-caret-down"></i>
 	  </button>
 	  <div class="dropdown-content">
-        <a href="landingpage.php">Landing Page</a>
-        <a href="forumtest.php">Forum Test</a>
-        <a href="forumdisp.php">Forum Display</a>
+      <a href="landingpage.php">Home</a>
+      <a href="forumtest.php">Create Post</a>
+      <a href="forumdisp.php">See Posts</a>
+  <a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
-  </div>
   <!-- MENU TAB DROPDOWN-->
 <?php
 	include 'config.php';
