@@ -5,7 +5,7 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-  
+
   <style>
   @keyframes growDown {
   0% {
@@ -94,7 +94,7 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-	
+
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
 		var auth2 = gapi.auth2.getAuthInstance();
@@ -103,10 +103,10 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-		
-	} 
+
+	}
 	///////////////////////////////////////////////
-	
+
   </script>
     <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
@@ -218,9 +218,8 @@
     }
   }
 ?>
- 
+
 <form action="" method="post">
   <textarea name="comment" placeholder="Comment here" rows="5" cols="100" style="resize:none"></textarea><br>
   <input type="submit" name="submit" value="Submit"></input>
 </form>
-
