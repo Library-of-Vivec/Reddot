@@ -5,8 +5,19 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-  
+
   <style>
+  @keyframes growDown {
+  0% {
+    transform: scaleY(0)
+  }
+  80% {
+    transform: scaleY(1.1)
+  }
+  100% {
+    transform: scaleY(1)
+  }
+}
 	body {
 	  font-family: Arial, Helvetica, sans-serif;
 	}
@@ -15,8 +26,9 @@
 	  float: left;
 	  overflow: hidden;
 	}
-
-
+  .dropbtn{
+    width:177px;
+  }
 	.dropdown-content {
 	  display: none;
 	  position: absolute;
@@ -42,10 +54,14 @@
 	}
 
 	.dropdown:hover .dropdown-content {
+    animation: growDown 500ms ease-in-out forwards;
+    transform-origin: top center;
 	  display: block;
 	}
   .navbar{
+    border-color:black;
     border-style: solid;
+    text-align: right;
   }
   button{
     transition-duration: 0.5s;
@@ -78,7 +94,7 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-	
+
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
 		var auth2 = gapi.auth2.getAuthInstance();
@@ -87,10 +103,10 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-		
-	} 
+
+	}
 	///////////////////////////////////////////////
-	
+
   </script>
     <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
