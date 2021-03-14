@@ -7,6 +7,17 @@
   <script src="functions.js"></script>
 
   <style>
+  @keyframes growDown {
+  0% {
+    transform: scaleY(0)
+  }
+  80% {
+    transform: scaleY(1.1)
+  }
+  100% {
+    transform: scaleY(1)
+  }
+}
 	body {
 	  font-family: Arial, Helvetica, sans-serif;
 	}
@@ -15,8 +26,9 @@
 	  float: left;
 	  overflow: hidden;
 	}
-
-
+  .dropbtn{
+    width:177px;
+  }
 	.dropdown-content {
 	  display: none;
 	  position: absolute;
@@ -42,6 +54,8 @@
 	}
 
 	.dropdown:hover .dropdown-content {
+    animation: growDown 500ms ease-in-out forwards;
+    transform-origin: top center;
 	  display: block;
 	}
   .navbar{
