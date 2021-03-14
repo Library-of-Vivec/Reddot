@@ -46,9 +46,8 @@
 	}
   .navbar{
     border-color:black;
-    border-bottom: inset;
-    border-width: 100%;
-    border-right: inset;
+    border-style: solid;
+    text-align: right;
   }
   button{
     transition-duration: 0.5s;
@@ -122,7 +121,7 @@
 	$result1 = mysqli_query($conn, $username_sql);
 	if(mysqli_num_rows($result1)>0){
 	  	while($row = mysqli_fetch_assoc($result1)){
-		echo "Welcome! ".$row["username"].'.';
+		echo $row["username"];
 		echo "</br><img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
