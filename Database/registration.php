@@ -31,6 +31,7 @@
 	  
       $username = $_POST['username'];
 	  $summary = $_POST['summary'];
+	  $summary = htmlspecialchars($summary, ENT_QUOTES);
 	  $profilepic = "profilepics/".$id.".png";
 	  $insert_sql = "INSERT INTO account(username,email, summary, profilepic)
                       VALUES('$username', '$email', '$summary', '$profilepic')";
@@ -46,7 +47,7 @@
 		  if(is_file($file))  
 				unlink($file);  
 		} 
-	    echo "<script>location.replace(\"registration2.php\")</script>";
+	    echo "<script>location.replace(\"setup_pic.php\")</script>";
 	  }
 	  else{
         echo "Username already exists!";

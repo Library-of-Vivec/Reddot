@@ -5,7 +5,7 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-
+  
   <style>
 	body {
 	  font-family: Arial, Helvetica, sans-serif;
@@ -67,9 +67,8 @@
   }
 </style>
   </head>
-  <body>
+<body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -82,23 +81,21 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-
+	
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
-		gapi.auth2.getAuthInstance().signOut().then(function(){
-			console.log('user signed out')
-		})
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.disconnect();
 		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-
-	}
+		
+	} 
 	///////////////////////////////////////////////
-
+	
   </script>
-
-  <!-- MENU TAB DROPDOWN-->
+    <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
     <button onclick ="signOut()" class="sign_out">Sign Out</button>
 	<div class="dropdown">
@@ -113,7 +110,7 @@
       </div>
 	</div>
   <!-- MENU TAB DROPDOWN-->
-
+  
 <?php
 	include 'config.php';
 	//DISPLAY USERNAME AND PROFILE PIC
@@ -136,14 +133,14 @@
 	$unamesql = mysqli_query($conn, $sql);
 	$unameres = mysqli_fetch_assoc($unamesql);
 	$uname = $unameres['username'];
-  $sql = "SELECT title FROM likes WHERE username = '$uname'";
-	$titlesql = mysqli_query($conn, $sql);
-	$titleres = mysqli_fetch_assoc($titlesql);
-//	$title = $titleres['title'];
+    $sql = "SELECT post_id FROM likes WHERE username = '$uname'";
+	$postidsql = mysqli_query($conn, $sql);
+	$postidres = mysqli_fetch_assoc($postidsql);
+	$id = $postidres['post_id'];
     $result = mysqli_query($conn, $sql);
 	while($row = mysqli_fetch_assoc($result)){
-		foreach($row as $key => $value){
-			echo "<a href='forumpost.php?title=$value'>".$value."</a><br>";
-      }
+		$value = $row["post_id"];
+		echo "<a href='forumpost.php?post_id=$value'>".$value."</a><br>";
+
     }
 ?>

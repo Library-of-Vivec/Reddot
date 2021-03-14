@@ -5,7 +5,7 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-
+  
   <style>
 	body {
 	  font-family: Arial, Helvetica, sans-serif;
@@ -69,7 +69,6 @@
   </head>
   <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -82,22 +81,20 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-
+	
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
-		gapi.auth2.getAuthInstance().signOut().then(function(){
-			console.log('user signed out')
-		})
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.disconnect();
 		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-
-	}
+	} 
 	///////////////////////////////////////////////
-
+	
   </script>
-
+  
   <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
     <button onclick ="signOut()" class="sign_out">Sign Out</button>
@@ -106,30 +103,29 @@
 	  <i class="fa fa-caret-down"></i>
 	  </button>
 	  <div class="dropdown-content">
-        <a href="forumtest.php">Create Post</a>
-        <a href="forumdisp.php">See all Posts</a>
-		<a href="display_all.php">See all Helpful Posts</a>
+      <a href="landingpage.php">Home</a>
+      <a href="forumtest.php">Create Post</a>
+      <a href="forumdisp.php">See Posts</a>
+  <a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
-
   <!-- MENU TAB DROPDOWN-->
-
+  
   <?php
     include 'config.php';
 	//DISPLAY USERNAME AND PROFILE PIC
+    echo $_COOKIE["email"]."</br>";
 	$email = $_COOKIE['email'];
 	$username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
 	$result1 = mysqli_query($conn, $username_sql);
 	if(mysqli_num_rows($result1)>0){
 	  	while($row = mysqli_fetch_assoc($result1)){
-		echo "Welcome! ".$row["username"].'.';
-		echo "</br><img src=\"".$row["profilepic"]."\" height=50 width=50>";
+		echo "Username: ".$row["username"];
+		echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
-
 	//DISPLAY USERNAME AND PROFILE PIC
   ?>
-  </div>
 
   </body>
  </html>
