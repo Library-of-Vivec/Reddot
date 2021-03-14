@@ -122,7 +122,7 @@
   <a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
-	
+
   <!-- MENU TAB DROPDOWN-->
 <?php
 	include 'config.php';
@@ -148,7 +148,7 @@
     while($row = mysqli_fetch_assoc($result)){
 		echo "<div class=\"posts\">";
 		$value = $row["id"];
-        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["title"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
 		if(strlen($row["post"]) > 198){
 			echo "<p>".substr($row["post"], 0,198)."...</p>";
 		}
@@ -206,11 +206,11 @@
   if(isset($_POST['delsub'])){
     foreach($_POST['checkdelete'] as $selected) {
       echo $selected;
-        $sqldel = "DELETE FROM forum WHERE title = '$selected'";
+        $sqldel = "DELETE FROM forum WHERE id = '$selected'";
         $delres = mysqli_query($conn,$sqldel);
-		$sqldel2 = "DELETE FROM likes WHERE title = '$selected'";
+		$sqldel2 = "DELETE FROM likes WHERE post_id = '$selected'";
 		$delres2 = mysqli_query($conn,$sqldel2);
-		$sqldel3 = "DELETE FROM comment WHERE title = '$selected'";
+		$sqldel3 = "DELETE FROM comment WHERE post_id = '$selected'";
 		$delres3 = mysqli_query($conn,$sqldel3);
 }
 	header("Refresh:0");
