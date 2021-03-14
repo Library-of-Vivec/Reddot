@@ -145,6 +145,25 @@
     include 'config.php';
     $sql = "SELECT title, post ,email_user FROM forum WHERE id = '$id'";
     $result = mysqli_query($conn, $sql);
+    $emailfrdb;
+    while($row = mysqli_fetch_assoc($result)){
+      $emailfrdb = $row['email_user'];
+    }
+    if($emailfrdb == $_COOKIE['email']){
+      echo "<form action='' method = 'post'>";
+      echo "<input type = 'submit' name = 'delpost' value = 'Delete'></input>";
+      echo "</form>";
+    }
+
+    if(isset($_POST['delpost'])){
+      $sqldel = "DELETE FROM forum WHERE id = '$id'";
+      $delres = mysqli_query($conn,$sqldel);
+      $sqldel = "DELETE FROM likes WHERE post_id = '$id'";
+      $delres = mysqli_query($conn,$sqldel);
+      $sqldel = "DELETE FROM comment WHERE post_id = '$id'";
+      $delres = mysqli_query($conn,$sqldel);
+      header("Location:forumdisp.php");
+    }
 	    while($row = mysqli_fetch_assoc($result)){
       foreach($row as $key => $value){
 		echo "<h2 style='color:green'> Posted BY: ".$row['email_user']."</h2><br>";
@@ -176,6 +195,13 @@
 <?php
 	if(mysqli_num_rows($likes) != 0) {
 		echo "You find this post as helpful.";
+    if(isset($_POST['like'])){
+      $sql = "UPDATE forum SET likes = likes - 1 WHERE id = '$id'";
+      $likes = mysqli_query($conn, $sql);
+      $sql = "DELETE FROM likes WHERE post_id = '$id'";
+      $likes = mysqli_query($conn, $sql);
+      echo "<meta http-equiv:'refresh' content = '0'>";
+    }
 	}
 	else {
 		if(isset($_POST['like'])){
