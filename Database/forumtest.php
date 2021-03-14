@@ -5,7 +5,7 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-
+  
   <style>
   @keyframes growDown {
   0% {
@@ -94,7 +94,7 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-
+	
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
 		var auth2 = gapi.auth2.getAuthInstance();
@@ -103,10 +103,10 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-
-	}
+		
+	} 
 	///////////////////////////////////////////////
-
+	
   </script>
     <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
@@ -122,7 +122,6 @@
   <a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
-
   <!-- MENU TAB DROPDOWN-->
 <?php
 	include 'config.php';
@@ -137,6 +136,7 @@
 		echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
+	echo "</div>";
 	//DISPLAY USERNAME AND PROFILE PIC
 
 
@@ -161,7 +161,7 @@
   }
 
  ?>
-  </div>
+
 <form action="" method="post">
   <input type="text" name="title" placeholder="Title here"></input><br>
   <textarea name="post" placeholder="Post here" rows="5" cols="100" style="resize:none"></textarea><br>

@@ -7,6 +7,17 @@
   <script src="functions.js"></script>
 
   <style>
+  @keyframes growDown {
+  0% {
+    transform: scaleY(0)
+  }
+  80% {
+    transform: scaleY(1.1)
+  }
+  100% {
+    transform: scaleY(1)
+  }
+}
 	body {
 	  font-family: Arial, Helvetica, sans-serif;
 	}
@@ -15,8 +26,9 @@
 	  float: left;
 	  overflow: hidden;
 	}
-
-
+  .dropbtn{
+    width:177px;
+  }
 	.dropdown-content {
 	  display: none;
 	  position: absolute;
@@ -42,13 +54,14 @@
 	}
 
 	.dropdown:hover .dropdown-content {
+    animation: growDown 500ms ease-in-out forwards;
+    transform-origin: top center;
 	  display: block;
 	}
   .navbar{
     border-color:black;
-    border-bottom: inset;
-    border-width: 100%;
-    border-right: inset;
+    border-style: solid;
+    text-align: right;
   }
   button{
     transition-duration: 0.5s;
@@ -67,9 +80,8 @@
   }
 </style>
   </head>
-  <body>
+<body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-
   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
@@ -85,9 +97,8 @@
 
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
-		gapi.auth2.getAuthInstance().signOut().then(function(){
-			console.log('user signed out')
-		})
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.disconnect();
 		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
@@ -97,8 +108,7 @@
 	///////////////////////////////////////////////
 
   </script>
-
-  <!-- MENU TAB DROPDOWN-->
+    <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
     <button onclick ="signOut()" class="sign_out">Sign Out</button>
 	<div class="dropdown">
@@ -106,12 +116,13 @@
 	  <i class="fa fa-caret-down"></i>
 	  </button>
 	  <div class="dropdown-content">
-        <a href="landingpage.php">Home</a>
-        <a href="forumtest.php">Create Post</a>
-        <a href="forumdisp.php">See Posts</a>
-		<a href="display_all.php">See all Helpful Posts</a>
+      <a href="landingpage.php">Home</a>
+      <a href="forumtest.php">Create Post</a>
+      <a href="forumdisp.php">See Posts</a>
+  <a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
+
   <!-- MENU TAB DROPDOWN-->
 <?php
 	include 'config.php';
@@ -132,6 +143,8 @@
   if(isset($_POST['submit'])){
     $title = $_POST['title'];
     $post = $_POST['post'];
+	$title = htmlspecialchars($title, ENT_QUOTES);
+	$post = htmlspecialchars($post, ENT_QUOTES);
 	$email = $_COOKIE['email'];
     $sql = "INSERT INTO forum(title, post, email_user)
                         VALUES('$title', '$post', '$email')";
@@ -148,7 +161,7 @@
   }
 
  ?>
-
+  </div>
 <form action="" method="post">
   <input type="text" name="title" placeholder="Title here"></input><br>
   <textarea name="post" placeholder="Post here" rows="5" cols="100" style="resize:none"></textarea><br>

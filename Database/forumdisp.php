@@ -122,7 +122,7 @@
   <a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
-
+	
   <!-- MENU TAB DROPDOWN-->
 <?php
 	include 'config.php';
@@ -137,10 +137,10 @@
 		echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
-  echo "</div>";
+	echo "</div>";
 	//DISPLAY USERNAME AND PROFILE PIC
 
-  $sql = "SELECT title, email_user, post, id FROM forum";
+  $sql = "SELECT title, email_user, post, id, likes FROM forum";
   $result = mysqli_query($conn, $sql);
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
     echo "admin page<br>";
@@ -155,7 +155,19 @@
 		else{
 			echo "<p>".$row["post"]."</p>";
 		}
-		echo "<p>posted by: ".$row["email_user"]."</p></div>";
+		echo "<p>likes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: ".$row1["username"]."</p></div>";
+		}
 
     }
     echo "<input type='submit' name = 'delsub' value = 'Delete'>";
@@ -174,11 +186,22 @@
 		else{
 			echo "<p>".$row["post"]."</p>";
 		}
-		echo "<p>posted by: ".$row["email_user"]."</p></div>";
+		echo "<p>likes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: ".$row1["username"]."</p></div>";
+		}
 
     }
   }
-
 
   if(isset($_POST['delsub'])){
     foreach($_POST['checkdelete'] as $selected) {
