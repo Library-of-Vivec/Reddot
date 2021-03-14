@@ -137,10 +137,10 @@
 		echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
-  echo "</div>";
+	echo "</div>";
 	//DISPLAY USERNAME AND PROFILE PIC
 
-  $sql = "SELECT title, email_user, post, id FROM forum";
+  $sql = "SELECT title, email_user, post, id, likes FROM forum";
   $result = mysqli_query($conn, $sql);
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
     echo "admin page<br>";
@@ -148,14 +148,26 @@
     while($row = mysqli_fetch_assoc($result)){
 		echo "<div class=\"posts\">";
 		$value = $row["id"];
-        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["title"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
 		if(strlen($row["post"]) > 198){
 			echo "<p>".substr($row["post"], 0,198)."...</p>";
 		}
 		else{
 			echo "<p>".$row["post"]."</p>";
 		}
-		echo "<p>posted by: ".$row["email_user"]."</p></div>";
+		echo "<p>likes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: ".$row1["username"]."</p></div>";
+		}
 
     }
     echo "<input type='submit' name = 'delsub' value = 'Delete'>";
@@ -174,20 +186,31 @@
 		else{
 			echo "<p>".$row["post"]."</p>";
 		}
-		echo "<p>posted by: ".$row["email_user"]."</p></div>";
+		echo "<p>likes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: ".$row1["username"]."</p></div>";
+		}
 
     }
   }
 
-
   if(isset($_POST['delsub'])){
     foreach($_POST['checkdelete'] as $selected) {
       echo $selected;
-        $sqldel = "DELETE FROM forum WHERE title = '$selected'";
+        $sqldel = "DELETE FROM forum WHERE id = '$selected'";
         $delres = mysqli_query($conn,$sqldel);
-		$sqldel2 = "DELETE FROM likes WHERE title = '$selected'";
+		$sqldel2 = "DELETE FROM likes WHERE post_id = '$selected'";
 		$delres2 = mysqli_query($conn,$sqldel2);
-		$sqldel3 = "DELETE FROM comment WHERE title = '$selected'";
+		$sqldel3 = "DELETE FROM comment WHERE post_id = '$selected'";
 		$delres3 = mysqli_query($conn,$sqldel3);
 }
 	header("Refresh:0");

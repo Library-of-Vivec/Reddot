@@ -5,7 +5,7 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-
+  
   <style>
   @keyframes growDown {
   0% {
@@ -94,7 +94,7 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-
+	
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
 		var auth2 = gapi.auth2.getAuthInstance();
@@ -103,10 +103,10 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-
-	}
+		
+	} 
 	///////////////////////////////////////////////
-
+	
   </script>
     <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
@@ -123,7 +123,7 @@
       </div>
 	</div>
   <!-- MENU TAB DROPDOWN-->
-
+  
 <?php
 	include 'config.php';
 	//DISPLAY USERNAME AND PROFILE PIC
@@ -137,9 +137,10 @@
 		echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
+	echo "</div>";
 
 ?>
-</div>
+
 <?php
     include 'config.php';
 	$sql = "SELECT username from account WHERE email='".$email."'";
@@ -149,11 +150,14 @@
     $sql = "SELECT post_id FROM likes WHERE username = '$uname'";
 	$postidsql = mysqli_query($conn, $sql);
 	$postidres = mysqli_fetch_assoc($postidsql);
-	$id = $postidres['post_id'];
     $result = mysqli_query($conn, $sql);
 	while($row = mysqli_fetch_assoc($result)){
 		$value = $row["post_id"];
-		echo "<a href='forumpost.php?post_id=$value'>".$value."</a><br>";
-
+		$title_sql = "SELECT title from forum WHERE id='".$value."'";
+		$title_sql_r = mysqli_query($conn, $title_sql);
+		while($row1 = mysqli_fetch_assoc($title_sql_r)){
+		  echo "<a href='forumpost.php?post_id=$value'>".$row1["title"]."</a><br>";
+		}
+		
     }
 ?>

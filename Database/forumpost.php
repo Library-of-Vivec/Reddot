@@ -5,7 +5,7 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-
+  
   <style>
   @keyframes growDown {
   0% {
@@ -94,7 +94,7 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-
+	
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
 		var auth2 = gapi.auth2.getAuthInstance();
@@ -103,10 +103,10 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-
-	}
+		
+	} 
 	///////////////////////////////////////////////
-
+	
   </script>
     <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
@@ -145,7 +145,7 @@
     include 'config.php';
     $sql = "SELECT title, post ,email_user FROM forum WHERE id = '$id'";
     $result = mysqli_query($conn, $sql);
-    $sqlemail = "SELECT email_user FROM forum WHERE id = '$id'";
+	    $sqlemail = "SELECT email_user FROM forum WHERE id = '$id'";
     $emailres = mysqli_query($conn, $sqlemail);
     $emailfrdb = mysqli_fetch_assoc($emailres)['email_user'];
     if($emailfrdb == $_COOKIE['email']){
@@ -162,16 +162,19 @@
       $delres = mysqli_query($conn,$sqldel);
       header("Location:forumdisp.php");
     }
+	
 	    while($row = mysqli_fetch_assoc($result)){
-      foreach($row as $key => $value){
-		echo "<h2 style='color:green'> Posted BY: ".$row['email_user']."</h2><br>";
-        echo "<h2> Title: ".$row["title"]."</h2><br>";
-        echo $row["post"];
-        echo "<br><br><br>";
-        break;
-      }
+			$get_user = "SELECT username from account WHERE email='".$row["email_user"]."'";
+			$get_user_r = mysqli_query($conn, $get_user);
+			while($row1 = mysqli_fetch_assoc($get_user_r)){
+				echo "<h2 style='color:green'> Posted BY: ".$row1['username']."</h2><br>";;
+			}
+			echo "<h2> Title: ".$row["title"]."</h2><br>";
+			echo $row["post"];
+			echo "<br><br><br>";
+			
     }
-
+	
 ?>
 
 <?php
@@ -194,13 +197,13 @@
 <?php
 	if(mysqli_num_rows($likes) != 0) {
 		echo "You find this post as helpful.";
-    if(isset($_POST['like'])){
-      $sql = "UPDATE forum SET likes = likes - 1 WHERE id = '$id'";
-      $likes = mysqli_query($conn, $sql);
-      $sql = "DELETE FROM likes WHERE post_id = '$id'";
-      $likes = mysqli_query($conn, $sql);
-      echo "<meta http-equiv:'refresh' content = '0'>";
-    }
+		if(isset($_POST['like'])){
+			$sql = "UPDATE forum SET likes = likes - 1 WHERE id = '$id'";
+			$likes = mysqli_query($conn, $sql);
+			$sql = "DELETE FROM likes WHERE post_id = '$id'";
+			$likes = mysqli_query($conn, $sql);
+			echo "<meta http-equiv='refresh' content='0'>";
+		}
 	}
 	else {
 		if(isset($_POST['like'])){
@@ -243,8 +246,9 @@
     }
   }
 ?>
-
+ 
 <form action="" method="post">
   <textarea name="comment" placeholder="Comment here" rows="5" cols="100" style="resize:none"></textarea><br>
   <input type="submit" name="submit" value="Submit"></input>
 </form>
+
