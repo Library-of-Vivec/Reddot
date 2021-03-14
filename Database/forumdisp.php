@@ -5,7 +5,7 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-  
+
   <style>
 	body {
 	  font-family: Arial, Helvetica, sans-serif;
@@ -59,7 +59,7 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-	
+
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
 		gapi.auth2.getAuthInstance().signOut().then(function(){
@@ -69,16 +69,16 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-		
-	} 
+
+	}
 	///////////////////////////////////////////////
-	
+
   </script>
     <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
     <a href="landingpage.php">FEU COMMUNITY FORUM</a>
 	<div class="dropdown">
-	<button class="dropbtn">Menu Tabs 
+	<button class="dropbtn">Menu Tabs
 	  <i class="fa fa-caret-down"></i>
 	  </button>
 	  <div class="dropdown-content">
@@ -86,7 +86,7 @@
         <a href="forumtest.php">Forum Test</a>
         <a href="forumdisp.php">Forum Display</a>
       </div>
-	</div> 
+	</div>
   </div>
   <!-- MENU TAB DROPDOWN-->
 <?php
@@ -103,14 +103,36 @@
 	    }
 	}
 	//DISPLAY USERNAME AND PROFILE PIC
-	
+
   $sql = "SELECT title FROM forum";
   $result = mysqli_query($conn, $sql);
-  #echo "<form action=\"forumpost.php\" method=\"post\">";
-  #echo "<input type=\"submit\" name=\"submit\" value=\"".$value"\">".$value."</a><br></form>";
-  while($row = mysqli_fetch_assoc($result)){
-    foreach($row as $key => $value){
-      echo "<a href='forumpost.php?title=$value'>".$value."</a><br>";
+  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph"){
+    echo "admin page<br>";
+    echo "<form action = '' method = 'post'>";
+    while($row = mysqli_fetch_assoc($result)){
+      foreach($row as $key => $value){
+        echo $value;
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$value."\"><a href='forumpost.php?title=$value'>".$value."</input></a><br>";
+      }
+    }
+    echo "<input type='submit' name = 'delsub' value = 'Delete'>";
+    echo "</form>";
+  }
+  else{
+    echo "user page <br>";
+    while($row = mysqli_fetch_assoc($result)){
+      foreach($row as $key => $value){
+        echo "<a href='forumpost.php?title=$value'>".$value."</a><br>";
+      }
     }
   }
+
+  if(isset($_POST['delsub'])){
+    foreach($_POST['checkdelete'] as $selected) {
+      echo $selected;
+        $sqldel = "DELETE FROM forum WHERE title = '$selected'";
+        $delres = mysqli_query($conn,$sqldel);
+}
+  }
+
  ?>
