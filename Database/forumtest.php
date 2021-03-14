@@ -45,10 +45,7 @@
 	  display: block;
 	}
   .navbar{
-    border-color:black;
-    border-bottom: inset;
-    border-width: 100%;
-    border-right: inset;
+    border-style: solid;
   }
   button{
     transition-duration: 0.5s;
@@ -112,6 +109,7 @@
 		<a href="display_all.php">See all Helpful Posts</a>
       </div>
 	</div>
+
   <!-- MENU TAB DROPDOWN-->
 <?php
 	include 'config.php';
@@ -148,7 +146,7 @@
   }
 
  ?>
-
+  </div>
 <form action="" method="post">
   <input type="text" name="title" placeholder="Title here"></input><br>
   <textarea name="post" placeholder="Post here" rows="5" cols="100" style="resize:none"></textarea><br>
