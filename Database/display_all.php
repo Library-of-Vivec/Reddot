@@ -46,9 +46,7 @@
 	}
   .navbar{
     border-color:black;
-    border-bottom: inset;
-    border-width: 100%;
-    border-right: inset;
+    border-style: solid;
   }
   button{
     transition-duration: 0.5s;
@@ -129,7 +127,7 @@
 	}
 
 ?>
-
+</div>
 <?php
     include 'config.php';
 	$sql = "SELECT username from account WHERE email='".$email."'";
