@@ -29,7 +29,7 @@
 	}
 	if(isset($_POST['home'])){
 	  setcookie("setup", "complete");
-	  echo "<script>location.replace(\"landingpage.php\")</script>";
+	  echo "<script>location.replace(\"profile.php\")</script>";
 	}
 	?>
 	<form action="setup_pic_confirm.php" method="post">
