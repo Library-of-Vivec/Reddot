@@ -153,8 +153,8 @@
 	  <i class=\"fa fa-caret-down\"></i>
 	  </button>
 	  <div class=\"dropdown-content\">
-      <a href=\"\">Profile</a>
-      <a href=\"\">Edit Profile</a>
+      <a href=\"profile.php\">Profile</a>
+      <a href=\"editprofile.php\">Edit Profile</a>
       <a href='' onclick =\"signOut()\">Sign Out</a>
       </div>
 	</div>";
