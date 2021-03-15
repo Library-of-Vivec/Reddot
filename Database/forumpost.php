@@ -155,7 +155,7 @@
       </button>
       <div class=\"dropdown-content\">
         <a href=\"profile.php\">Profile</a>
-        <a href=\"\">Edit Profile</a>
+        <a href=\"editprofile.php\">Edit Profile</a>
         <a href='loginpage.php' onclick =\"signOut()\">Sign Out</a>
         </div>
     </div>";
