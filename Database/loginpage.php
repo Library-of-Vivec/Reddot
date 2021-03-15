@@ -3,11 +3,38 @@
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="functions.js"></script>
+
+
+
+  <style>
+  .box{
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-top: -350px;
+    margin-left: -180px;
+    border-style: solid;
+    height: 75%;
+    width:20%;
+  }
+  .g-signin2{
+    margin:0;
+    position:absolute;
+    top:50%;
+    left:48%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  </style>
   </head>
   <body>
-	<div class="g-signin2" data-onsuccess="onSignIn"></div>
-	<div  id="content"></div>
-  
+    <!--button-->
+  <div class = 'box'>
+	<div class="g-signin2" data-onsuccess="onSignIn" data-width="250" data-height="100"></div>
+  <p>aslnd jklanwdjknasjkdnawlkhjdnasjldnlawkndasjln</p>
+	<div id="content"></div>
+  </div>
+
   <script>
 	////GOOGLE SIGN BUTTON FUNCTION///////
     function onSignIn(googleUser){
