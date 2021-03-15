@@ -154,9 +154,9 @@
       <i class=\"fa fa-caret-down\"></i>
       </button>
       <div class=\"dropdown-content\">
-        <a href=\"\">Profile</a>
+        <a href=\"profile.php\">Profile</a>
         <a href=\"\">Edit Profile</a>
-        <a href='' onclick =\"signOut()\">Sign Out</a>
+        <a href='loginpage.php' onclick =\"signOut()\">Sign Out</a>
         </div>
     </div>";
     echo "</div>";
@@ -271,16 +271,20 @@
 ?>
 
 <?php
-    $sql = "SELECT username, comment FROM comment WHERE post_id = '$id'";
+    $sql = "SELECT username, comment, id FROM comment WHERE post_id = '$id'";
     $result = mysqli_query($conn, $sql);
 	echo "<h3>Comments section: </h3>";
+  echo "<form action='' method='post'>";
     while($row = mysqli_fetch_assoc($result)){
       foreach($row as $key => $value){
 		echo $row['username'].": ";
         echo $row["comment"]."<br>";
+        $commid = $row['id'];
+        echo "<button name = '$commid'>Delete Comment </button><br>";
         break;
       }
     }
+    echo "</form>";
 ?>
 
 <?php
@@ -299,6 +303,25 @@
     }
   }
 ?>
+<?php
+  include 'config.php';
+  $result = mysqli_query($conn, "SELECT * FROM comment");
+  $rows = mysqli_num_rows($result);
+
+  $minres = mysqli_query($conn, "SELECT MIN(id) FROM comment");
+  $minid = mysqli_fetch_assoc($minres);
+
+  $maxres = mysqli_query($conn, "SELECT MAX(id) FROM comment");
+  $maxid = mysqli_fetch_assoc($maxres);
+  for($i = $minid['MIN(id)']; $i <= $maxid['MAX(id)']; $i++){
+    if(isset($_POST[$i])){
+      $sqldel = "DELETE FROM comment WHERE id = '$i'";
+      $delres = mysqli_query($conn,$sqldel);
+      echo "<meta http-equiv='refresh' content = '0'>";
+      break;
+    }
+  }
+ ?>
 
 <form action="" method="post" id="comment_form">
   <textarea name="comment" placeholder="Comment here" rows="5" cols="100" style="resize:none" id="comment_field"></textarea><br>
