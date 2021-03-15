@@ -7,7 +7,7 @@
   <script src="functions.js"></script>
   
   <style>
-  @keyframes growDown {
+ @keyframes growDown {
   0% {
     transform: scaleY(0)
   }
@@ -18,50 +18,65 @@
     transform: scaleY(1)
   }
 }
-	body {
-	  font-family: Arial, Helvetica, sans-serif;
-	}
+  *{
+  padding: 0px;
+  margin: 0px;
+  }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    background-image: url('bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    }
+  .bodydiv{
+    margin:5px;
+    padding:5px;
+  }
 
-	.dropdown {
-	  float: left;
-	  overflow: hidden;
-	}
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
   .dropbtn{
     width:177px;
   }
-	.dropdown-content {
-	  display: none;
-	  position: absolute;
-	  background-color: #f9f9f9;
-	  min-width: 160px;
-	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	  z-index: 1;
-	}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
 
-	.dropdown-content a {
+    .dropdown-content a {
     transition-duration: 0.5s;
-	  float: none;
-	  color: black;
-	  padding: 12px 16px;
-	  text-decoration: none;
-	  display: block;
-	  text-align: left;
-	}
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
 
-	.dropdown-content a:hover {
+    .dropdown-content a:hover {
     transition-duration: 0.5s;
-	  background-color: #ddd;
-	}
+      background-color: #ddd;
+    }
 
-	.dropdown:hover .dropdown-content {
+    .dropdown:hover .dropdown-content {
     animation: growDown 500ms ease-in-out forwards;
     transform-origin: top center;
-	  display: block;
-	}
+      display: block;
+    }
   .navbar{
-    border-color:black;
-    border-style: solid;
+    height:auto;
+    width: auto;
+    margin: 0 auto;
     text-align: right;
+    position: sticky;
+    top:0;
+    background-color: rgba(36, 133, 36, 1);
   }
   button{
     transition-duration: 0.5s;
@@ -82,32 +97,7 @@
   </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-  <script>
-	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
-	check_login();
-	//// IF USER HASNT REGISTERED VALIDATION in functions.js///
-	check_reg();
-	////GOOGLE SIGN BUTTON FUNCTION but hidden///////
-	var x = document.getElementById("signin_");
-	x.style.display = "none";
-	function onSignIn(googleUser){
-		var profile = googleUser.getBasicProfile()
-	}
-	//////////////////////////////////////////////
-	
-	////GOOGLE SIGN OUT BUTTON FUNCTION/////
-	function signOut(){
-		var auth2 = gapi.auth2.getAuthInstance();
-		auth2.disconnect();
-		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
-		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
-		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
-		location.replace("loginpage.php");
-		
-	} 
-	///////////////////////////////////////////////
-	
-  </script>
+
     <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
     <button onclick ="signOut()" class="sign_out">Sign Out</button>
@@ -142,17 +132,51 @@
 
 <?php
     $id = $_GET['post_id'];
+	$sql = "SELECT username from account WHERE email='".$email."'";
+	$unamesql = mysqli_query($conn, $sql);
+	$unameres = mysqli_fetch_assoc($unamesql);
+	$uname = $unameres['username'];
     include 'config.php';
     $sql = "SELECT title, post ,email_user FROM forum WHERE id = '$id'";
     $result = mysqli_query($conn, $sql);
-	    $sqlemail = "SELECT email_user FROM forum WHERE id = '$id'";
+    $sqlemail = "SELECT email_user FROM forum WHERE id = '$id'";
     $emailres = mysqli_query($conn, $sqlemail);
     $emailfrdb = mysqli_fetch_assoc($emailres)['email_user'];
-    if($emailfrdb == $_COOKIE['email']){
+	$get_repsql = "SELECT * FROM report WHERE username = '$uname' AND post_id = '$id'";
+	$reports = mysqli_query($conn, $get_repsql);
+    if($emailfrdb == $_COOKIE['email'] || $email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
       echo "<form action='' method = 'post'>";
       echo "<input type = 'submit' name = 'delpost' value = 'Delete'></input>";
       echo "</form>";
+	  echo "<form action='' method = 'post'>";
+      echo "<input type = 'submit' name = 'editpost' value = 'Edit'></input>";
+      echo "</form>";
     }
+	else{
+	  if(mysqli_num_rows($reports) != 0){
+		  echo "<form action='' method = 'post'>";
+		  echo "<input type = 'submit' name = 'cancelreppost' value = 'Cancel Report'></input>";
+		  echo "</form>";
+	  }
+	  else{
+		  echo "<form action='' method = 'post'>";
+		  echo "<input type = 'submit' name = 'reppost' value = 'Report'></input>";
+		  echo "</form>";
+	  }
+	}
+	if(isset($_POST['reppost'])){
+	  header("location:reportpost.php?post_id=$id");
+	}
+	if(isset($_POST['editpost'])){
+	  header("location:editpost.php?post_id=$id");
+	}
+	if(isset($_POST['cancelreppost'])){
+	  $sqldel = "DELETE FROM report WHERE post_id = '$id' AND username = '$uname'" ;
+      $delres = mysqli_query($conn,$sqldel);
+	  $sql = "UPDATE forum SET reports = reports -1  WHERE id = '$id'";
+	  $reports = mysqli_query($conn, $sql);
+	  echo "<meta http-equiv='refresh' content='0'>";
+	}
     if(isset($_POST['delpost'])){
       $sqldel = "DELETE FROM forum WHERE id = '$id'";
       $delres = mysqli_query($conn,$sqldel);
@@ -181,11 +205,7 @@
     $sql = "SELECT likes FROM forum WHERE id = '$id'";
     $like = mysqli_query($conn, $sql);
 	$numlikes = mysqli_fetch_assoc($like);
-	$sql = "SELECT username from account WHERE email='".$email."'";
-	$unamesql = mysqli_query($conn, $sql);
-	$unameres = mysqli_fetch_assoc($unamesql);
 	echo "<h4>Number of helpfulness: ".$numlikes['likes']."</h4>";
-	$uname = $unameres['username'];
 	$sql = "SELECT * FROM likes WHERE username = '$uname' AND post_id = '$id'";
 	$likes = mysqli_query($conn, $sql);
 ?>
@@ -247,8 +267,43 @@
   }
 ?>
  
-<form action="" method="post">
-  <textarea name="comment" placeholder="Comment here" rows="5" cols="100" style="resize:none"></textarea><br>
-  <input type="submit" name="submit" value="Submit"></input>
+<form action="" method="post" id="comment_form">
+  <textarea name="comment" placeholder="Comment here" rows="5" cols="100" style="resize:none" id="comment_field"></textarea><br>
+  <input type="submit" name="submit" value="Submit" id="submitbtn" disabled="disabled"></input>
 </form>
+  <script>
+	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
+	check_login();
+	//// IF USER HASNT REGISTERED VALIDATION in functions.js///
+	check_reg();
+	////GOOGLE SIGN BUTTON FUNCTION but hidden///////
+	var x = document.getElementById("signin_");
+	x.style.display = "none";
+	function onSignIn(googleUser){
+		var profile = googleUser.getBasicProfile()
+	}
+	//////////////////////////////////////////////
+	
+	////GOOGLE SIGN OUT BUTTON FUNCTION/////
+	function signOut(){
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.disconnect();
+		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
+		location.replace("loginpage.php");
+		
+	} 
+	///////////////////////////////////////////////
+	comment_form.addEventListener('input', () => {
+		if(comment_field.value != ''){
+			submitbtn.removeAttribute('disabled');
+		}
+		else{
+			submitbtn.setAttribute('disabled', 'disabled');
+		}
+	});
+  </script>
+  </body>
+  </html>
 

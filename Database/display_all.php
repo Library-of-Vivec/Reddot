@@ -7,7 +7,7 @@
   <script src="functions.js"></script>
   
   <style>
-  @keyframes growDown {
+ @keyframes growDown {
   0% {
     transform: scaleY(0)
   }
@@ -18,50 +18,65 @@
     transform: scaleY(1)
   }
 }
-	body {
-	  font-family: Arial, Helvetica, sans-serif;
-	}
+  *{
+  padding: 0px;
+  margin: 0px;
+  }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    background-image: url('bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    }
+  .bodydiv{
+    margin:5px;
+    padding:5px;
+  }
 
-	.dropdown {
-	  float: left;
-	  overflow: hidden;
-	}
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
   .dropbtn{
     width:177px;
   }
-	.dropdown-content {
-	  display: none;
-	  position: absolute;
-	  background-color: #f9f9f9;
-	  min-width: 160px;
-	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	  z-index: 1;
-	}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
 
-	.dropdown-content a {
+    .dropdown-content a {
     transition-duration: 0.5s;
-	  float: none;
-	  color: black;
-	  padding: 12px 16px;
-	  text-decoration: none;
-	  display: block;
-	  text-align: left;
-	}
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
 
-	.dropdown-content a:hover {
+    .dropdown-content a:hover {
     transition-duration: 0.5s;
-	  background-color: #ddd;
-	}
+      background-color: #ddd;
+    }
 
-	.dropdown:hover .dropdown-content {
+    .dropdown:hover .dropdown-content {
     animation: growDown 500ms ease-in-out forwards;
     transform-origin: top center;
-	  display: block;
-	}
+      display: block;
+    }
   .navbar{
-    border-color:black;
-    border-style: solid;
+    height:auto;
+    width: auto;
+    margin: 0 auto;
     text-align: right;
+    position: sticky;
+    top:0;
+    background-color: rgba(36, 133, 36, 1);
   }
   button{
     transition-duration: 0.5s;
@@ -82,32 +97,7 @@
   </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-  <script>
-	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
-	check_login();
-	//// IF USER HASNT REGISTERED VALIDATION in functions.js///
-	check_reg();
-	////GOOGLE SIGN BUTTON FUNCTION but hidden///////
-	var x = document.getElementById("signin_");
-	x.style.display = "none";
-	function onSignIn(googleUser){
-		var profile = googleUser.getBasicProfile()
-	}
-	//////////////////////////////////////////////
-	
-	////GOOGLE SIGN OUT BUTTON FUNCTION/////
-	function signOut(){
-		var auth2 = gapi.auth2.getAuthInstance();
-		auth2.disconnect();
-		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
-		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
-		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
-		location.replace("loginpage.php");
-		
-	} 
-	///////////////////////////////////////////////
-	
-  </script>
+
     <!-- MENU TAB DROPDOWN-->
   <div class="navbar">
     <button onclick ="signOut()" class="sign_out">Sign Out</button>
@@ -161,3 +151,31 @@
 		
     }
 ?>
+  <script>
+	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
+	check_login();
+	//// IF USER HASNT REGISTERED VALIDATION in functions.js///
+	check_reg();
+	////GOOGLE SIGN BUTTON FUNCTION but hidden///////
+	var x = document.getElementById("signin_");
+	x.style.display = "none";
+	function onSignIn(googleUser){
+		var profile = googleUser.getBasicProfile()
+	}
+	//////////////////////////////////////////////
+	
+	////GOOGLE SIGN OUT BUTTON FUNCTION/////
+	function signOut(){
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.disconnect();
+		document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
+		location.replace("loginpage.php");
+		
+	} 
+	///////////////////////////////////////////////
+	
+  </script>
+ </body>
+</html>
