@@ -161,12 +161,12 @@
 	echo "</div>";
 	//DISPLAY USERNAME AND PROFILE PIC
   ?>
-  
+
 	<meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://apis.google.com/js/platform.js" async defer> </script>
 	<script src="functions.js"></script>
-	
+
   <?php
     $email = $_COOKIE["email"];
 	echo $email;
@@ -177,10 +177,10 @@
 	{
 	  //temp_profilepics = pang store lang ng temp na pic nadedelete din after
 	  //profilepics = official folder ng profile pic
-	  
-	  //GET DEFAULT PICTURE 
+
+	  //GET DEFAULT PICTURE
 	  //RENAMING DEFAULT PICTURE TO STUDENT ID IN PROFILEPICS
-	  
+
       $username = $_POST['username'];
 	  $summary = $_POST['summary'];
 	  $summary = htmlspecialchars($summary, ENT_QUOTES);
@@ -191,17 +191,17 @@
 	    echo "default register success";
 		setcookie("reg", "yes");
 		setcookie("setup", "notcomplete");
-		
+
 		// Deleting all the files in the temp_profilepics
-		foreach($files as $file) { 
-		  if(is_file($file))  
-				unlink($file);  
-		} 
+		foreach($files as $file) {
+		  if(is_file($file))
+				unlink($file);
+		}
 	    echo "<script>location.replace(\"setup_pic.php\")</script>";
 	  }
 	  else{
         echo "Username already exists!";
-	  }  
+	  }
 
 	}
   ?>
@@ -214,7 +214,7 @@
 	  <br>
       <input type="submit" name="next" value="Next">
 	</form>
-  
+
  <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
