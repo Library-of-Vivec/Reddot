@@ -5,9 +5,9 @@
   src="https://apis.google.com/js/platform.js" async defer>
   </script>
   <script src="functions.js"></script>
-  
+
   <style>
- @keyframes growDown {
+  @keyframes growDown {
   0% {
     transform: scaleY(0)
   }
@@ -17,7 +17,7 @@
   100% {
     transform: scaleY(1)
   }
-}
+  }
   *{
   padding: 0px;
   margin: 0px;
@@ -34,13 +34,14 @@
   }
 
     .dropdown {
-      float: left;
+      float: right;
       overflow: hidden;
     }
   .dropbtn{
     width:177px;
   }
     .dropdown-content {
+      cursor:pointer;
       display: none;
       position: absolute;
       background-color: #f9f9f9;
@@ -70,13 +71,13 @@
       display: block;
     }
   .navbar{
-    height:auto;
+    height:10%;
     width: auto;
     margin: 0 auto;
     text-align: right;
     position: sticky;
     top:0;
-    background-color: rgba(36, 133, 36, 1);
+    background-color: rgba(255, 79, 79, 0.5);
   }
   button{
     transition-duration: 0.5s;
@@ -90,45 +91,67 @@
     border-style: none;
     padding: 15px 32px;
   }
-  .sign_out{
-    float: right;
+  .profile{
+    width:160px;
+    border-style: none;
+    padding: 15px 32px;
+    display: inline-block;
+    margin-right: 10%;
   }
-</style>
+  button img{
+    vertical-align: middle;
+  }
+  .btnHead{
+    float:left;
+    background-color:transparent;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius:15px;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    background-repeat:no-repeat;
+    height:75px;
+    width:150px;
+    -webkit-transition-duration:0.5s;
+  </style>
   </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
 
-    <!-- MENU TAB DROPDOWN-->
-  <div class="navbar">
-    <button onclick ="signOut()" class="sign_out">Sign Out</button>
-	<div class="dropdown">
-	<button class="dropbtn">Menu Tabs
-	  <i class="fa fa-caret-down"></i>
-	  </button>
-	  <div class="dropdown-content">
-      <a href="landingpage.php">Home</a>
-      <a href="forumtest.php">Create Post</a>
-      <a href="forumdisp.php">See Posts</a>
-  <a href="display_all.php">See all Helpful Posts</a>
-      </div>
-	</div>
-  <!-- MENU TAB DROPDOWN-->
-<?php
-	include 'config.php';
-	//DISPLAY USERNAME AND PROFILE PIC
-    echo $_COOKIE["email"]."</br>";
-	$email = $_COOKIE['email'];
-	$username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
-	$result1 = mysqli_query($conn, $username_sql);
-	if(mysqli_num_rows($result1)>0){
-	  	while($row = mysqli_fetch_assoc($result1)){
-		echo "Username: ".$row["username"];
-		echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
-	    }
-	}
-	echo "</div>";
-
-?>
+    <?php
+      include 'config.php';
+    //DISPLAY USERNAME AND PROFILE PIC
+    $email = $_COOKIE['email'];
+    $profpic = "";
+    $username = "";
+    $username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
+    $result1 = mysqli_query($conn, $username_sql);
+    if(mysqli_num_rows($result1)>0){
+        while($row = mysqli_fetch_assoc($result1)){
+          $username = $row['username'];
+          $profpic = $row['profilepic'];
+      //echo "Username: ".$row["username"];
+      //echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
+        }
+    }
+    echo "<div class=\"navbar\">
+    <button class = \"btnHead\"><a href=\"landingpage.php\"><img src=\"home.png\" height=50 width=50></a></button>
+    <button class = \"btnHead\"><a href=\"forumtest.php\"><img src=\"create.png\" height=50 width=50></button>
+    <button class = \"btnHead\"><a href=\"display_all.php\"><img src=\"likes.png\" height=50 width=50></button>
+    <div class=\"dropdown\">
+    <button class=\"profile\"><img src='$profpic' width=30 height=30>&nbsp;&nbsp;$username
+      <i class=\"fa fa-caret-down\"></i>
+      </button>
+      <div class=\"dropdown-content\">
+        <a href=\"\">Profile</a>
+        <a href=\"\">Edit Profile</a>
+        <a href='' onclick =\"signOut()\">Sign Out</a>
+        </div>
+    </div>";
+    echo "</div>";
+    //DISPLAY USERNAME AND PROFILE PIC
+    ?>
 
 <?php
     $id = $_GET['post_id'];
@@ -186,7 +209,7 @@
       $delres = mysqli_query($conn,$sqldel);
       header("Location:forumdisp.php");
     }
-	
+
 	    while($row = mysqli_fetch_assoc($result)){
 			$get_user = "SELECT username from account WHERE email='".$row["email_user"]."'";
 			$get_user_r = mysqli_query($conn, $get_user);
@@ -196,9 +219,9 @@
 			echo "<h2> Title: ".$row["title"]."</h2><br>";
 			echo $row["post"];
 			echo "<br><br><br>";
-			
+
     }
-	
+
 ?>
 
 <?php
@@ -266,7 +289,7 @@
     }
   }
 ?>
- 
+
 <form action="" method="post" id="comment_form">
   <textarea name="comment" placeholder="Comment here" rows="5" cols="100" style="resize:none" id="comment_field"></textarea><br>
   <input type="submit" name="submit" value="Submit" id="submitbtn" disabled="disabled"></input>
@@ -283,7 +306,7 @@
 		var profile = googleUser.getBasicProfile()
 	}
 	//////////////////////////////////////////////
-	
+
 	////GOOGLE SIGN OUT BUTTON FUNCTION/////
 	function signOut(){
 		var auth2 = gapi.auth2.getAuthInstance();
@@ -292,8 +315,8 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
-		
-	} 
+
+	}
 	///////////////////////////////////////////////
 	comment_form.addEventListener('input', () => {
 		if(comment_field.value != ''){
@@ -306,4 +329,3 @@
   </script>
   </body>
   </html>
-
