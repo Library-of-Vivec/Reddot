@@ -7,7 +7,7 @@
   <script src="functions.js"></script>
 
   <style>
-  @keyframes growDown {
+ @keyframes growDown {
   0% {
     transform: scaleY(0)
   }
@@ -17,7 +17,7 @@
   100% {
     transform: scaleY(1)
   }
-  }
+}
   *{
   padding: 0px;
   margin: 0px;
@@ -71,13 +71,13 @@
       display: block;
     }
   .navbar{
-    height:10%;
+    height:5em;
     width: auto;
     margin: 0 auto;
     text-align: right;
     position: sticky;
     top:0;
-    background-color: rgba(255, 79, 79, 0.5);
+    background-color: rgba(255, 255, 255, 0.7);
   }
   button{
     transition-duration: 0.5s;
@@ -92,6 +92,7 @@
     padding: 15px 32px;
   }
   .profile{
+    height: 100%;
     width:160px;
     border-style: none;
     padding: 15px 32px;
@@ -114,7 +115,15 @@
     height:75px;
     width:150px;
     -webkit-transition-duration:0.5s;
-  </style>
+  }
+  .logo{
+    height: 75px;
+    width: 75px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: 45em;
+  }
+</style>
   </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
@@ -140,6 +149,7 @@
     <button class = \"btnHead\"><a href=\"landingpage.php\"><img src=\"home.png\" height=50 width=50></a></button>
     <button class = \"btnHead\"><a href=\"forumtest.php\"><img src=\"create.png\" height=50 width=50></a></button>
     <button class = \"btnHead\"><a href=\"display_all.php\"><img src=\"likes.png\" height=50 width=50></a></button>
+    <img class = \"logo\" src = \"RED_DOT_1.png\">
   	<div class=\"dropdown\">
   	<button class=\"profile\"><img src='$profpic' width=30 height=30>&nbsp;&nbsp;$username
   	  <i class=\"fa fa-caret-down\"></i>
