@@ -138,8 +138,8 @@
   	}
     echo "<div class=\"navbar\">
     <button class = \"btnHead\"><a href=\"landingpage.php\"><img src=\"home.png\" height=50 width=50></a></button>
-    <button class = \"btnHead\"><a href=\"forumtest.php\"><img src=\"create.png\" height=50 width=50></button>
-    <button class = \"btnHead\"><a href=\"display_all.php\"><img src=\"likes.png\" height=50 width=50></button>
+    <button class = \"btnHead\"><a href=\"forumtest.php\"><img src=\"create.png\" height=50 width=50></a></button>
+    <button class = \"btnHead\"><a href=\"display_all.php\"><img src=\"likes.png\" height=50 width=50></a></button>
   	<div class=\"dropdown\">
   	<button class=\"profile\"><img src='$profpic' width=30 height=30>&nbsp;&nbsp;$username
   	  <i class=\"fa fa-caret-down\"></i>
