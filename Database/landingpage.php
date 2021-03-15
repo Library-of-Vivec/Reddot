@@ -147,7 +147,7 @@
   <button class = \"btnHead\"><a href=\"landingpage.php\"><img src=\"home.png\" height=50 width=50></a></button>
   <button class = \"btnHead\"><a href=\"forumtest.php\"><img src=\"create.png\" height=50 width=50></a></button>
   <button class = \"btnHead\"><a href=\"display_all.php\"><img src=\"likes.png\" height=50 width=50></a></button>
-  <img class = \"logo\" src = \"RED_DOT.png\">
+  <img class = \"logo\" src = \"RED_DOT_1.png\">
 	<div class=\"dropdown\">
 	<button class=\"profile\"><img src='$profpic' width=30 height=30>&nbsp;&nbsp;$username
 	  <i class=\"fa fa-caret-down\"></i>
