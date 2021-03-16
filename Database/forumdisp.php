@@ -276,6 +276,7 @@
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
     echo "<form action = '' method = 'post'>";
     while($row = mysqli_fetch_assoc($result)){
+      echo "<div class = 'dispdiv'>";
 		echo "<div class=\"posts\">";
 		$value = $row["id"];
         echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
@@ -298,7 +299,7 @@
 		while($row1 = mysqli_fetch_assoc($get_user_r)){
 			echo "<p>posted by: ".$row1["username"]."</p></div>";
 		}
-
+    echo "</div>";
     }
     echo "<input type='submit' name = 'delsub' value = 'Delete'>";
     echo "</form>";
