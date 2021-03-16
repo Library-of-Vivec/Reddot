@@ -24,7 +24,7 @@
   }
     body {
       font-family: Arial, Helvetica, sans-serif;
-    background-image: url('bg.jpg');
+    background-image: url('reddot_bg2.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     }
@@ -71,17 +71,18 @@
       display: block;
     }
   .navbar{
-    height:5em;
+    height:6.2em;
     width: auto;
     margin: 0 auto;
     text-align: right;
     position: sticky;
     top:0;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow:0px 2px 5px grey;
   }
   button{
     transition-duration: 0.5s;
-    background-color:grey;
+    background-color:white;
     border-style: none;
     padding: 15px 32px;
   }
@@ -107,70 +108,262 @@
     background-color:transparent;
     background-repeat: no-repeat;
     border: none;
-    border-radius:15px;
     cursor:pointer;
     overflow: hidden;
     outline:none;
     background-repeat:no-repeat;
     height:75px;
-    width:150px;
+    width:75px;
     -webkit-transition-duration:0.5s;
   }
+  .btnHead:hover{
+  }
   .logo{
+    float:left;
     height: 75px;
     width: 75px;
     display: inline-block;
-    margin-left: auto;
-    margin-right: 45em;
+    margin-left: 30px;
+    margin-top: 10px;
+  }
+  .ppic{
+    border-radius: 35px;
+  }
+  .searchbtn{
+    margin-top: 9px;
+    margin-left: 10px;
+    background:url(search.png) 5px 10px no-repeat;
+    height:3.3em;
+    width:10px;
+    float:left;
+  }
+  .searchbtn:disabled:hover{
+    margin-left: 10px;
+    float:left;
+    background:url(search.png) 5px 10px no-repeat;
+    cursor:not-allowed;
+  }
+  .searchbtn:hover{
+    margin-left: 10px;
+    float:left;
+    background:url(search3.png) 5px 10px no-repeat;
+    cursor:pointer;
+  }
+  .searchbox{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    float:left;
+    margin-top:30px;
+    margin-left:325px;
+    height:2em;
+    width:50em;
+    font-size:15pt;
+  }
+  .searchbox:focus{
+    outline:none;
+    border-left:none;
+    border-top:none;
+    border-right:none;
+    float:left;
+    margin-top:30px;
+    margin-left:325px;
+    height:2em;
+    width:50em;
+    font-size:15pt;
+  }
+  .dispdiv{
+    background-color:rgb(59,59,59);
+    margin-top:25px;
+    margin-left:15%;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+  }
+  .dispdiv:hover{
+    transition-duration: 0.5s;
+    background-color:rgb(219,217,217);
+    margin-top:25px;
+    margin-left:15%;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+  }
+  .createpost{
+    border-style: hidden;
+    border-radius: 6px;
+    padding-left:10px;
+    padding-top:15px;
+    text-align: left;
+    background-color:rgb(130,130,130);
+    height:50px;
+    width:100%;
+    font-size:12pt;
+  }
+  .createpost:hover{
+    border-style: hidden;
+    border-radius: 6px;
+    background-color:rgb(59,59,59);
+    padding-left:10px;
+    padding-top:15px;
+    text-align: left;
+    height:50px;
+    width:100%;
+    cursor:text;
+    font-size:12pt;
   }
 </style>
   </head>
-  <body>
+<body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-  <?php
-    include 'config.php';
-	//DISPLAY USERNAME AND PROFILE PIC
-	$email = $_COOKIE['email'];
-  $profpic = "";
-  $username = "";
-	$username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
-	$result1 = mysqli_query($conn, $username_sql);
-	if(mysqli_num_rows($result1)>0){
-	  	while($row = mysqli_fetch_assoc($result1)){
-        $username = $row['username'];
-        $profpic = $row['profilepic'];
-		//echo "Username: ".$row["username"];
-		//echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
-	    }
-	}
-  echo "<div class=\"navbar\">
-  <button class = \"btnHead\"><a href=\"landingpage.php\"><img src=\"home.png\" height=50 width=50></a></button>
-  <button class = \"btnHead\"><a href=\"forumtest.php\"><img src=\"create.png\" height=50 width=50></a></button>
-  <button class = \"btnHead\"><a href=\"display_all.php\"><img src=\"likes.png\" height=50 width=50></a></button>
-  <img class = \"logo\" src = \"RED_DOT_1.png\">
-	<div class=\"dropdown\">
-	<button class=\"profile\"><img src='$profpic' width=30 height=30>&nbsp;&nbsp;$username
-	  <i class=\"fa fa-caret-down\"></i>
-	  </button>
-	  <div class=\"dropdown-content\">
-      <a href=\"profile.php\">Profile</a>
-      <a href=\"editprofile.php\">Edit Profile</a>
-      <a href='' onclick =\"signOut()\">Sign Out</a>
-      </div>
-	</div>";
-	echo "</div>";
-	//DISPLAY USERNAME AND PROFILE PIC
+
+    <?php
+      include 'config.php';
+    //DISPLAY USERNAME AND PROFILE PIC
+    $email = $_COOKIE['email'];
+    $profpic = "";
+    $username = "";
+    $username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
+    $result1 = mysqli_query($conn, $username_sql);
+    if(mysqli_num_rows($result1)>0){
+        while($row = mysqli_fetch_assoc($result1)){
+          $username = $row['username'];
+          $profpic = $row['profilepic'];
+      //echo "Username: ".$row["username"];
+      //echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
+        }
+    }
+    echo "<div class=\"navbar\">
+    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_1.png\" height=60 width=60></a>
+    <div class=\"dropdown\">
+    <button class=\"profile\"><img class = \"ppic\" src='$profpic' width=65 height=65>
+      <i class=\"fa fa-caret-down\"></i>
+      </button>
+      <div class=\"dropdown-content\">
+        <a href='profile.php?user=$username'>Profile</a>
+        <a href=\"editprofile.php\">Edit Profile</a>
+        <a onclick =\"signOut()\">Sign Out</a>
+        </div>
+    </div>";
+    echo "
+    <div class=\"search-container\">
+    <form action=\"\" method=\"post\" id=\"searchform\">
+      <input rows = '5' type=\"text\" name=\"search_field\" placeholder=\"Search...\" id=\"search_field\" class='searchbox'></input><br>
+      <button type=\"submit\" name=\"search\" value=\"Search\" id=\"searchbtn\" disabled=\"disabled\" class='searchbtn'></button>
+    </form>
+    </div>";
+    echo "</div>";
+    //DISPLAY USERNAME AND PROFILE PIC
+  //CREATE POST BUTTON
   ?>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida massa vel dignissim luctus. Nam interdum lacus vitae ligula fermentum, ac feugiat augue fermentum. Nullam sit amet odio sollicitudin, finibus orci id, aliquet odio. Fusce lacinia ultrices diam, vel tincidunt lorem feugiat vel. Suspendisse interdum congue magna ut pellentesque. Donec imperdiet, justo ac elementum euismod, arcu erat tristique sem, ut cursus ipsum massa cursus elit. Duis hendrerit nisl vel elementum fringilla. Nam dictum eleifend metus ac dignissim. Curabitur feugiat facilisis vehicula. Vestibulum in odio sit amet justo condimentum feugiat. Etiam ut eros felis. Donec erat leo, aliquam sed rutrum in, imperdiet non erat. Phasellus fermentum a sapien vel dictum. Vivamus porta maximus magna, sit amet efficitur mauris maximus a. Duis cursus, ipsum eu tristique mattis, ipsum velit ultrices turpis, at eleifend augue tortor vel est.
-<br><br><br><br><br><br><br><br><br><br><br><br>
-Nullam quis quam vitae nisi finibus feugiat ac nec purus. Donec scelerisque semper ultrices. Vestibulum eget ipsum id orci bibendum mattis a a justo. Nulla facilisi. Sed at elementum nisl. Aliquam vehicula mauris id enim pretium, a laoreet tortor tristique. Aliquam erat volutpat. Phasellus nulla tortor, interdum ac aliquet vel, rutrum sit amet sem. Aliquam erat volutpat. Donec ex mauris, finibus vel facilisis id, volutpat eu metus. Quisque commodo arcu nisi, vel vestibulum lacus tempus vel.
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-Sed in congue arcu, eu elementum nibh. Donec condimentum enim eu lorem molestie malesuada. Aliquam erat volutpat. Vestibulum pulvinar mattis sollicitudin. Nunc mattis feugiat nulla, a suscipit magna. Nulla at enim hendrerit nulla ullamcorper ultrices ut eu sapien. Morbi ultrices aliquam rhoncus. Proin cursus suscipit dolor in volutpat. Donec vel turpis consectetur, luctus odio at, interdum justo. Aenean maximus eu magna ut bibendum. Pellentesque ut commodo felis. Donec luctus vitae magna luctus rhoncus. Nam condimentum rhoncus aliquam. Phasellus fringilla eros eu lectus finibus ornare. Donec semper sit amet ipsum id dictum. Ut quis sapien dui.
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-Vivamus porttitor, massa aliquet tristique placerat, mauris lacus fermentum sapien, vel convallis sapien quam quis dolor. Fusce sit amet eleifend felis, in porta metus. Mauris sit amet quam blandit, facilisis diam vel, hendrerit nibh. Nunc eu turpis ipsum. Aliquam non enim at risus imperdiet lacinia. In elementum vel massa ultricies aliquet. Sed in lobortis nibh, eu posuere orci. Aenean cursus quam vitae metus varius malesuada. Fusce ante metus, rutrum eu sapien a, viverra accumsan nibh. Etiam interdum, ipsum nec imperdiet eleifend, ex neque mattis sapien, eu imperdiet mi velit at tortor. Phasellus ut nisl diam. Aliquam placerat, ligula sit amet blandit facilisis, odio diam lobortis diam, a elementum justo nibh sed risus.
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-Quisque et libero ut velit rutrum aliquam. Aenean sit amet sapien lacus. Vestibulum dolor nulla, faucibus in dolor vitae, vestibulum consectetur ante. Mauris felis erat, ullamcorper sed eros sed, aliquam lacinia nunc. Nam ac egestas turpis. Sed interdum mi ut feugiat euismod. Morbi feugiat accumsan ornare. Praesent nec mauris vel metus consequat convallis. In dignissim ipsum non varius posuere.
-  <script>
+
+  <div class="dispdiv"><button class = 'createpost'><a href="forumtest.php" style="text-decoration:none; cursor:text; color:black;">Create Post...</a></button></div>
+  <?php
+	if(isset($_POST['search'])){
+		$search = $_POST['search_field'];
+		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
+	}
+	 $sql = "SELECT title, email_user, post, id, likes FROM forum";
+  $result = mysqli_query($conn, $sql);
+  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
+    echo "<form action = '' method = 'post'>";
+    while($row = mysqli_fetch_assoc($result)){
+      echo "<div class = 'dispdiv'>";
+		echo "<div class=\"posts\">";
+		$value = $row["id"];
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
+		if(strlen($row["post"]) > 198){
+			echo "<p>".substr($row["post"], 0,198)."...</p>";
+		}
+		else{
+			echo "<p>".$row["post"]."</p>";
+		}
+		echo "<p>likes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
+		}
+    echo "</div>";
+    }
+    echo "<input type='submit' name = 'delsub' value = 'Delete'>";
+    echo "</form>";
+  }
+  else{
+
+    while($row = mysqli_fetch_assoc($result)){
+      echo "<div class = 'dispdiv'>";
+		echo "<div class=\"posts\">";
+		$value = $row["id"];
+    echo "<a href='forumpost.php?post_id=$value'>".$row["title"]."</a><br>";
+		if(strlen($row["post"]) > 198){
+			echo "<p>".substr($row["post"], 0,198)."...</p>";
+		}
+		else{
+			echo "<p>".$row["post"]."</p>";
+		}
+		echo "<p>likes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
+		}
+    echo "</div>";
+    }
+  }
+
+  if(isset($_POST['delsub'])){
+    foreach($_POST['checkdelete'] as $selected) {
+      echo $selected;
+        $sqldel = "DELETE FROM forum WHERE id = '$selected'";
+        $delres = mysqli_query($conn,$sqldel);
+		$sqldel2 = "DELETE FROM likes WHERE post_id = '$selected'";
+		$delres2 = mysqli_query($conn,$sqldel2);
+		$sqldel3 = "DELETE FROM comment WHERE post_id = '$selected'";
+		$delres3 = mysqli_query($conn,$sqldel3);
+}
+	echo "<meta http-equiv='refresh' content = '0'>";
+  }
+
+  if(isset($_POST['delsub'])){
+    foreach($_POST['checkdelete'] as $selected) {
+      echo $selected;
+        $sqldel = "DELETE FROM forum WHERE id = '$selected'";
+        $delres = mysqli_query($conn,$sqldel);
+		$sqldel2 = "DELETE FROM likes WHERE post_id = '$selected'";
+		$delres2 = mysqli_query($conn,$sqldel2);
+		$sqldel3 = "DELETE FROM comment WHERE post_id = '$selected'";
+		$delres3 = mysqli_query($conn,$sqldel3);
+}
+	echo "<meta http-equiv='refresh' content = '0'>";
+  }
+
+ ?>
+   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
 	//// IF USER HASNT REGISTERED VALIDATION in functions.js///
@@ -191,9 +384,17 @@ Quisque et libero ut velit rutrum aliquam. Aenean sit amet sapien lacus. Vestibu
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
+
 	}
 	///////////////////////////////////////////////
-
+  searchform.addEventListener('input', () => {
+        if(search_field.value != ''){
+            searchbtn.removeAttribute('disabled');
+        }
+        else{
+            searchbtn.setAttribute('disabled', 'disabled');
+        }
+    });
   </script>
-  </body>
- </html>
+ </body>
+</html>

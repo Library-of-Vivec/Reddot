@@ -93,7 +93,7 @@
 		if($check_register){
 			setcookie("reg", "yes");
 			setcookie("setup", "complete");
-			echo "<script>location.replace(\"forumdisp.php\")</script>";
+			echo "<script>location.replace(\"landingpage.php\")</script>";
 		}
 		else{
 			setcookie("reg", "no");

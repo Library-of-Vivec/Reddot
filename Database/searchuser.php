@@ -229,6 +229,7 @@
       include 'config.php';
     //DISPLAY USERNAME AND PROFILE PIC
     $email = $_COOKIE['email'];
+	$search = $_GET['search_user'];
     $profpic = "";
     $username = "";
     $username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
@@ -248,7 +249,7 @@
       <i class=\"fa fa-caret-down\"></i>
       </button>
       <div class=\"dropdown-content\">
-        <a href='profile.php?user=$username'>Profile</a>
+        <a href=\"profile.php\">Profile</a>
         <a href=\"editprofile.php\">Edit Profile</a>
         <a onclick =\"signOut()\">Sign Out</a>
         </div>
@@ -266,18 +267,59 @@
 
 	if(isset($_POST['search'])){
 		$search = $_POST['search_field'];
+		echo "<script>location.replace(\"searchuser.php?search_user=".$search."\")</script>";
+	}
+	if(isset($_POST['filterpost'])){
 		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
 	}
-		$username = $_GET['user'];
-		$username_sql = "SELECT username, profilepic ,summary from account WHERE username='".$username."'";
-		$result1 = mysqli_query($conn, $username_sql);
-		$result = mysqli_fetch_assoc($result1);
-		echo "<h1 style='color:white'>Username: ".$result["username"]."</h1>";
-		echo "</br>Profile Pic: <img src=\"".$result["profilepic"]."\" height=500 width=500>";
-		echo "</br>Bio: ".$result["summary"];
-	?>
-  
- <script>
+	if(isset($_POST['filteracc'])){
+		echo "<script>location.replace(\"searchuser.php?search_user=".$search."\")</script>";
+	}
+  $sql = "SELECT username, summary, profilepic FROM account WHERE username LIKE '%$search%'";
+  $result = mysqli_query($conn, $sql);
+  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
+    echo "admin page<br>";
+    echo "<form action = '' method = 'post'>";
+    while($row = mysqli_fetch_assoc($result)){
+		echo "<div class = 'dispdiv'>";
+		echo "<div class=\"posts\">";
+		$value = $row["username"];
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["username"]."\"><a href='profile.php?user=$value'>".$row["username"]."</input></a><br>";
+		echo "<img src=\"".$row["profilepic"]."\" height=\"25\" width=\"25\">";
+		echo "<p>Summary: ".$row["summary"]."</p></div></div>";
+
+    }
+    echo "<input type='submit' name = 'delsub' value = 'Delete'>";
+    echo "</form>";
+  }
+  else{
+    echo "user page <br>";
+    while($row = mysqli_fetch_assoc($result)){
+		echo "<div class = 'dispdiv'>";
+		echo "<div class=\"posts\">";
+		$value = $row["username"];
+		echo "<img src=\"".$row["profilepic"]."\" height=\"25\" width=\"25\">";
+        echo "<a href='profile.php?user=$value'>".$value."</a><br>";
+		echo "<p>Summary: ".$row["summary"]."</p></div></div>";
+
+    }
+  }
+
+  if(isset($_POST['delsub'])){
+    foreach($_POST['checkdelete'] as $selected) {
+      echo $selected;
+        $sqldel = "DELETE FROM forum WHERE id = '$selected'";
+        $delres = mysqli_query($conn,$sqldel);
+		$sqldel2 = "DELETE FROM likes WHERE post_id = '$selected'";
+		$delres2 = mysqli_query($conn,$sqldel2);
+		$sqldel3 = "DELETE FROM comment WHERE post_id = '$selected'";
+		$delres3 = mysqli_query($conn,$sqldel3);
+}
+	echo "<meta http-equiv='refresh' content = '0'>";
+  }
+
+ ?>
+   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
 	//// IF USER HASNT REGISTERED VALIDATION in functions.js///
@@ -298,16 +340,25 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
+
 	}
 	///////////////////////////////////////////////
+	//binago ko
 	searchform.addEventListener('input', () => {
-        if(search_field.value != ''){
-            searchbtn.removeAttribute('disabled');
-        }
-        else{
-            searchbtn.setAttribute('disabled', 'disabled');
-        }
-    });
+		if(search_field.value != ''){
+			searchbtn.removeAttribute('disabled');
+		}
+		else{
+			searchbtn.setAttribute('disabled', 'disabled');
+		}
+	});
+	//binago ko
   </script>
-  </body>
- </html>
+    <form action="" method="post" >
+	  <input type="submit" name="filteracc" value="ACCOUNTS" id="filteracc"></input>
+	</form>
+	<form action="" method="post">
+	  <input type="submit" name="filterpost" value="POSTS" id="filterpost" ></input>
+	</form>
+ </body>
+</html>

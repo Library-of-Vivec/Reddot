@@ -1,3 +1,4 @@
+
 <html>
   <head>
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
@@ -24,7 +25,7 @@
   }
     body {
       font-family: Arial, Helvetica, sans-serif;
-    background-image: url('bg.jpg');
+    background-image: url('reddot_bg2.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     }
@@ -71,17 +72,18 @@
       display: block;
     }
   .navbar{
-    height:5em;
+    height:6.2em;
     width: auto;
     margin: 0 auto;
     text-align: right;
     position: sticky;
     top:0;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow:0px 2px 5px grey;
   }
   button{
     transition-duration: 0.5s;
-    background-color:grey;
+    background-color:white;
     border-style: none;
     padding: 15px 32px;
   }
@@ -107,30 +109,124 @@
     background-color:transparent;
     background-repeat: no-repeat;
     border: none;
-    border-radius:15px;
     cursor:pointer;
     overflow: hidden;
     outline:none;
     background-repeat:no-repeat;
     height:75px;
-    width:150px;
+    width:75px;
     -webkit-transition-duration:0.5s;
   }
+  .btnHead:hover{
+  }
   .logo{
+    float:left;
     height: 75px;
     width: 75px;
     display: inline-block;
-    margin-left: auto;
-    margin-right: 45em;
+    margin-left: 30px;
+    margin-top: 10px;
+  }
+  .ppic{
+    border-radius: 35px;
+  }
+  .searchbtn{
+    margin-top: 9px;
+    margin-left: 10px;
+    background:url(search.png) 5px 10px no-repeat;
+    height:3.3em;
+    width:10px;
+    float:left;
+  }
+  .searchbtn:disabled:hover{
+    margin-left: 10px;
+    float:left;
+    background:url(search.png) 5px 10px no-repeat;
+    cursor:not-allowed;
+  }
+  .searchbtn:hover{
+    margin-left: 10px;
+    float:left;
+    background:url(search3.png) 5px 10px no-repeat;
+    cursor:pointer;
+  }
+  .searchbox{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    float:left;
+    margin-top:30px;
+    margin-left:325px;
+    height:2em;
+    width:50em;
+    font-size:15pt;
+  }
+  .searchbox:focus{
+    outline:none;
+    border-left:none;
+    border-top:none;
+    border-right:none;
+    float:left;
+    margin-top:30px;
+    margin-left:325px;
+    height:2em;
+    width:50em;
+    font-size:15pt;
+  }
+  .dispdiv{
+    background-color:rgb(59,59,59);
+    margin-top:25px;
+    margin-left:15%;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+  }
+  .dispdiv:hover{
+    transition-duration: 0.5s;
+    background-color:rgb(219,217,217);
+    margin-top:25px;
+    margin-left:15%;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+  }
+  .createpost{
+    border-style: hidden;
+    border-radius: 6px;
+    padding-left:10px;
+    padding-top:15px;
+    text-align: left;
+    background-color:rgb(130,130,130);
+    height:50px;
+    width:100%;
+    font-size:12pt;
+  }
+  .createpost:hover{
+    border-style: hidden;
+    border-radius: 6px;
+    background-color:rgb(59,59,59);
+    padding-left:10px;
+    padding-top:15px;
+    text-align: left;
+    height:50px;
+    width:100%;
+    cursor:text;
+    font-size:12pt;
   }
 </style>
   </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-
-    <!-- MENU TAB DROPDOWN-->
-    <?php
-      include 'config.php';
+<?php 
+     include 'config.php';
     //DISPLAY USERNAME AND PROFILE PIC
     $email = $_COOKIE['email'];
     $profpic = "";
@@ -146,24 +242,31 @@
         }
     }
     echo "<div class=\"navbar\">
-    <button class = \"btnHead\"><a href=\"landingpage.php\"><img src=\"home.png\" height=50 width=50></a></button>
-    <button class = \"btnHead\"><a href=\"forumtest.php\"><img src=\"create.png\" height=50 width=50></a></button>
-    <button class = \"btnHead\"><a href=\"display_all.php\"><img src=\"likes.png\" height=50 width=50></a></button>
-    <img class = \"logo\" src = \"RED_DOT_1.png\">
+    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_1.png\" height=60 width=60></a>
     <div class=\"dropdown\">
-    <button class=\"profile\"><img src='$profpic' width=30 height=30>&nbsp;&nbsp;$username
+    <button class=\"profile\"><img class = \"ppic\" src='$profpic' width=65 height=65>
       <i class=\"fa fa-caret-down\"></i>
       </button>
       <div class=\"dropdown-content\">
-        <a href=\"\">Profile</a>
-        <a href=\"\">Edit Profile</a>
-        <a href='' onclick =\"signOut()\">Sign Out</a>
+        <a href='profile.php?user=$username'>Profile</a>
+        <a href=\"editprofile.php\">Edit Profile</a>
+        <a onclick =\"signOut()\">Sign Out</a>
         </div>
+    </div>";
+    echo "
+    <div class=\"search-container\">
+    <form action=\"\" method=\"post\" id=\"searchform\">
+      <input rows = '5' type=\"text\" name=\"search_field\" placeholder=\"Search...\" id=\"search_field\" class='searchbox'></input><br>
+      <button type=\"submit\" name=\"search\" value=\"Search\" id=\"searchbtn\" disabled=\"disabled\" class='searchbtn'></button>
+    </form>
     </div>";
     echo "</div>";
     //DISPLAY USERNAME AND PROFILE PIC
-	//DISPLAY USERNAME AND PROFILE PIC
-
+  //CREATE POST BUTTON
+	if(isset($_POST['search'])){
+		$search = $_POST['search_field'];
+		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
+	}
 	$id = $_GET['post_id'];
 	$sql = "SELECT username from account WHERE email='".$email."'";
 	$unamesql = mysqli_query($conn, $sql);
@@ -193,8 +296,8 @@
 	echo $email."<br>";
     if($insert){
       echo "edit post success";
-	  echo '<script>alert("Post successfully editedt")</script>';
-	  header("location:forumpost.php?post_id=$id");
+	  echo '<script>alert("Post successfully edited")</script>';
+	  echo "<script>location.replace(\"forumpost.php?post_id=".$id."\")</script>";
     }
     else{
       echo "Post could not be made.";
@@ -236,6 +339,14 @@
 			submitbtn.setAttribute('disabled', 'disabled');
 		}
 	});
+	searchform.addEventListener('input', () => {
+        if(search_field.value != ''){
+            searchbtn.removeAttribute('disabled');
+        }
+        else{
+            searchbtn.setAttribute('disabled', 'disabled');
+        }
+    });
 </script>
 </body>
 </html>

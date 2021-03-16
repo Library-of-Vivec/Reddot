@@ -229,6 +229,7 @@
       include 'config.php';
     //DISPLAY USERNAME AND PROFILE PIC
     $email = $_COOKIE['email'];
+	$search = $_GET['search_post'];
     $profpic = "";
     $username = "";
     $username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
@@ -268,16 +269,94 @@
 		$search = $_POST['search_field'];
 		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
 	}
-		$username = $_GET['user'];
-		$username_sql = "SELECT username, profilepic ,summary from account WHERE username='".$username."'";
-		$result1 = mysqli_query($conn, $username_sql);
-		$result = mysqli_fetch_assoc($result1);
-		echo "<h1 style='color:white'>Username: ".$result["username"]."</h1>";
-		echo "</br>Profile Pic: <img src=\"".$result["profilepic"]."\" height=500 width=500>";
-		echo "</br>Bio: ".$result["summary"];
-	?>
-  
- <script>
+	if(isset($_POST['filterpost'])){
+		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
+	}
+	if(isset($_POST['filteracc'])){
+		echo "<script>location.replace(\"searchuser.php?search_user=".$search."\")</script>";
+	}
+  $sql = "SELECT title, email_user, post, id, likes FROM forum WHERE title LIKE '%$search%' OR post LIKE '%$search%'";
+  $result = mysqli_query($conn, $sql);
+  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
+    echo "admin page<br>";
+    echo "<form action = '' method = 'post'>";
+    while($row = mysqli_fetch_assoc($result)){
+		echo "<div class = 'dispdiv'>";
+		echo "<div class=\"posts\">";
+		$value = $row["id"];
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
+		if(strlen($row["post"]) > 198){
+			echo "<p>".substr($row["post"], 0,198)."...</p>";
+		}
+		else{
+			echo "<p>".$row["post"]."</p>";
+		}
+		echo "<p>likes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div></div>";
+		}
+
+    }
+    echo "<input type='submit' name = 'delsub' value = 'Delete'>";
+    echo "</form>";
+  }
+  else{
+    echo "user page <br>";
+    while($row = mysqli_fetch_assoc($result)){
+		echo "<div class = 'dispdiv'>";
+		echo "<div class=\"posts\">";
+		$value = $row["id"];
+        echo "<a href='forumpost.php?post_id=$value'>".$row["title"]."</a><br>";
+		if(strlen($row["post"]) > 198){
+			echo "<p>".substr($row["post"], 0,198)."...</p>";
+		}
+		else{
+			echo "<p>".$row["post"]."</p>";
+		}
+		echo "<p>likes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
+			
+		}
+		echo "</div>";
+    }
+  }
+
+  if(isset($_POST['delsub'])){
+    foreach($_POST['checkdelete'] as $selected) {
+      echo $selected;
+        $sqldel = "DELETE FROM forum WHERE id = '$selected'";
+        $delres = mysqli_query($conn,$sqldel);
+		$sqldel2 = "DELETE FROM likes WHERE post_id = '$selected'";
+		$delres2 = mysqli_query($conn,$sqldel2);
+		$sqldel3 = "DELETE FROM comment WHERE post_id = '$selected'";
+		$delres3 = mysqli_query($conn,$sqldel3);
+}
+	echo "<meta http-equiv='refresh' content = '0'>";
+  }
+
+ ?>
+   <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
 	//// IF USER HASNT REGISTERED VALIDATION in functions.js///
@@ -298,16 +377,25 @@
 		document.cookie = "reg=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 		document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		location.replace("loginpage.php");
+
 	}
 	///////////////////////////////////////////////
+	//binago ko
 	searchform.addEventListener('input', () => {
-        if(search_field.value != ''){
-            searchbtn.removeAttribute('disabled');
-        }
-        else{
-            searchbtn.setAttribute('disabled', 'disabled');
-        }
-    });
+		if(search_field.value != ''){
+			searchbtn.removeAttribute('disabled');
+		}
+		else{
+			searchbtn.setAttribute('disabled', 'disabled');
+		}
+	});
+	//binago ko
   </script>
-  </body>
- </html>
+  	<form action="" method="post" >
+	  <input type="submit" name="filteracc" value="ACCOUNTS" id="filteracc"></input>
+	</form>
+	<form action="" method="post">
+	  <input type="submit" name="filterpost" value="POSTS" id="filterpost" ></input>
+	</form>
+ </body>
+</html>
