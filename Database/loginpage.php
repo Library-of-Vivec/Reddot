@@ -7,15 +7,23 @@
 
 
   <style>
+  body{
+    /*background-image: url('reddot_bg.jpg');*/
+    background-color: rgb(44,53,57);
+    background-size: cover;
+  }
   .box{
+    background-color:rgb(0,0,0);
+    border-color: red;
     position: fixed;
     top:50%;
     left:50%;
     margin-top: -350px;
     margin-left: -180px;
-    border-style: solid;
-    height: 75%;
-    width:20%;
+    height: 700px;;
+    width:350px;
+    border-style: ridge;
+    box-shadow: 10px 15px 10px rgb(0,0,0);
   }
   .g-signin2{
     margin:0;
@@ -25,16 +33,23 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   }
+  .logo{
+    display: block;
+   margin-left: auto;
+   margin-right: auto;
+   width: 80%;
+   height:25%;
+   margin-top: 5em;
+  }
   </style>
   </head>
   <body>
     <!--button-->
   <div class = 'box'>
-	<div class="g-signin2" data-onsuccess="onSignIn" data-width="250" data-height="100"></div>
-  <p>aslnd jklanwdjknasjkdnawlkhjdnasjldnlawkndasjln</p>
+	<div class="g-signin2" data-onsuccess="onSignIn" data-width="200" data-height="50"></div>
+  <div class= "logocont"><img class ="logo" src="reddot_logo.gif"></div>
 	<div id="content"></div>
   </div>
-
   <script>
 	////GOOGLE SIGN BUTTON FUNCTION///////
     function onSignIn(googleUser){
@@ -54,7 +69,7 @@
           document.cookie = "email=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		  document.cookie = "reg=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		  document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
-		  alert('Email Address must be a FEU ACC');
+		  alert('Email Address must be an FEU Account');
 		  location.replace("loginpage.php");
 		  /////////////////////////////////////
 		}
@@ -78,7 +93,7 @@
 		if($check_register){
 			setcookie("reg", "yes");
 			setcookie("setup", "complete");
-			echo "<script>location.replace(\"landingpage.php\")</script>";
+			echo "<script>location.replace(\"forumdisp.php\")</script>";
 		}
 		else{
 			setcookie("reg", "no");
