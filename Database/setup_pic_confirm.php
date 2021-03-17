@@ -19,17 +19,18 @@
 	if(isset($_POST['save']))
 	{
 	  copy("temp_profilepics/".$id.".png", "profilepics/".$id.".png");
-	  $folder_path = "temp_profilepics"; 
-	  $files = glob($folder_path.'/*');  
+	  $folder_path = "temp_profilepics";
+	  $files = glob($folder_path.'/*');
 		// Deleting all the files in the temp_profilepics
-		foreach($files as $file) { 
-		  if(is_file($file))  
-				unlink($file);  
-		} 
+		foreach($files as $file) {
+		  if(is_file($file))
+				unlink($file);
+		}
 	}
 	if(isset($_POST['home'])){
 	  setcookie("setup", "complete");
-	  echo "<script>location.replace(\"profile.php\")</script>";
+    echo "<meta http-equiv = 'refresh' content = '0'>";
+	  echo "<script>location.replace(\"forumdisp.php\")</script>";
 	}
 	?>
 	<form action="setup_pic_confirm.php" method="post">
