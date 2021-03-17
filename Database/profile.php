@@ -268,6 +268,7 @@
 		$search = $_POST['search_field'];
 		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
 	};
+		$username = $_GET['user'];
 		$username_sql = "SELECT username, profilepic ,summary from account WHERE username='".$username."'";
 		$result1 = mysqli_query($conn, $username_sql);
 		$result = mysqli_fetch_assoc($result1);

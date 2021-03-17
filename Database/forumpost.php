@@ -227,6 +227,9 @@
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
 <?php 
      include 'config.php';
+	  date_default_timezone_set('Asia/Manila');
+	  $CURRENT_DAY = date("M d Y");
+	  $YESTERDAY = date("M d Y", strtotime("-1 days"));
     //DISPLAY USERNAME AND PROFILE PIC
     $email = $_COOKIE['email'];
     $profpic = "";
@@ -315,15 +318,15 @@
     $sql = "SELECT likes FROM forum WHERE id = '$id'";
     $like = mysqli_query($conn, $sql);
 	$numlikes = mysqli_fetch_assoc($like);
-	echo "<h4>Number of helpfulness: ".$numlikes['likes']."</h4>";
+	echo "<h4>Number of upvotes: ".$numlikes['likes']."</h4>";
 	$sql = "SELECT * FROM likes WHERE username = '$uname' AND post_id = '$id'";
 	$likes = mysqli_query($conn, $sql);
 
 	echo "<form method=\"POST\">";
-    echo "<input type=\"submit\" name=\"like\" value=\"Helpful\"/></form>";
+    echo "<input type=\"submit\" name=\"like\" value=\"Upvote\"/></form>";
 
 	if(mysqli_num_rows($likes) != 0) {
-		echo "You find this post as helpful.";
+		echo "You upvoted this post.";
 		if(isset($_POST['like'])){
 			$sql = "UPDATE forum SET likes = likes - 1 WHERE id = '$id'";
 			$likes = mysqli_query($conn, $sql);
@@ -343,26 +346,44 @@
 		}
 	}
 
-    $sql = "SELECT username, comment, id FROM comment WHERE post_id = '$id'";
+    $sql = "SELECT username, comment, id, date FROM comment WHERE post_id = '$id'";
     $result = mysqli_query($conn, $sql);
 	echo "<h3>Comments section: </h3>";
   echo "<form action='' method='post'>";
     while($row = mysqli_fetch_assoc($result)){
-      foreach($row as $key => $value){
+						//DATE
+		$check = $row["date"];
+		$pos = strpos($check, "at");
+		$check = substr($check ,0, $pos-1);
+		$at_time = substr($row["date"] ,$pos-1, strlen($row["date"]));
+		if($check == $CURRENT_DAY){
+			echo"Today ".$at_time."</br>";
+		}
+		else if($check == $YESTERDAY){
+			echo"Yesterday ".$at_time."</br>";
+		}
+		else{
+			echo $row["date"]."</br>";
+		}
+				//DATE
 		echo $row['username'].": ";
         echo $row["comment"]."<br>";
         $commid = $row['id'];
-        echo "<button name = '$commid'>Delete Comment </button><br>";
-        break;
-      }
+		if($uname == $row['username'] || $email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
+			echo "<button name = '$commid'>Delete Comment </button><br>";
+		}
     }
     echo "</form>";
 
   if(isset($_POST['submit'])){
     $comment = $_POST['comment'];
 	$comment = htmlspecialchars($comment, ENT_QUOTES);
-    $sql = "INSERT INTO comment(post_id, username, comment)
-                        VALUES('$id', '$uname', '$comment')";
+	date_default_timezone_set('Asia/Manila');
+	$TIME = date("G:i A");
+	$DATE = date("M d Y");
+	$DATE_F = $DATE.' at '.$TIME;
+    $sql = "INSERT INTO comment(post_id, username, comment, date)
+                        VALUES('$id', '$uname', '$comment', '$DATE_F')";
     $insert = mysqli_query($conn,$sql);
 
     if($insert){

@@ -30,7 +30,7 @@
 	if(isset($_POST['home'])){
 	  setcookie("setup", "complete");
     echo "<meta http-equiv = 'refresh' content = '0'>";
-	  echo "<script>location.replace(\"forumdisp.php\")</script>";
+	  echo "<script>location.replace(\"landingpage.php\")</script>";
 	}
 	?>
 	<form action="setup_pic_confirm.php" method="post">

@@ -273,8 +273,12 @@
 	$title = htmlspecialchars($title, ENT_QUOTES);
 	$post = htmlspecialchars($post, ENT_QUOTES);
 	$email = $_COOKIE['email'];
-    $sql = "INSERT INTO forum(title, post, email_user)
-                        VALUES('$title', '$post', '$email')";
+	date_default_timezone_set('Asia/Manila');
+	$TIME = date("G:i A");
+	$DATE = date("M d Y");
+	$DATE_F = $DATE.' at '.$TIME;
+    $sql = "INSERT INTO forum(title, post, email_user, date)
+                        VALUES('$title', '$post', '$email', '$DATE_F')";
     $insert = mysqli_query($conn,$sql);
 	echo $title."<br>";
 	echo $post."<br>";

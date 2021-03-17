@@ -227,9 +227,13 @@
 
     <?php
       include 'config.php';
+	  date_default_timezone_set('Asia/Manila');
+	  $CURRENT_DAY = date("M d Y");
+	  $YESTERDAY = date("M d Y", strtotime("-1 days"));
     //DISPLAY USERNAME AND PROFILE PIC
     $email = $_COOKIE['email'];
 	$search = $_GET['search_post'];
+
     $profpic = "";
     $username = "";
     $username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
@@ -275,7 +279,7 @@
 	if(isset($_POST['filteracc'])){
 		echo "<script>location.replace(\"searchuser.php?search_user=".$search."\")</script>";
 	}
-  $sql = "SELECT title, email_user, post, id, likes FROM forum WHERE title LIKE '%$search%' OR post LIKE '%$search%'";
+  $sql = "SELECT title, email_user, post, id, date, likes FROM forum WHERE title LIKE '%$search%' OR post LIKE '%$search%'";
   $result = mysqli_query($conn, $sql);
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
     echo "admin page<br>";
@@ -284,6 +288,21 @@
 		echo "<div class = 'dispdiv'>";
 		echo "<div class=\"posts\">";
 		$value = $row["id"];
+						//DATE
+		$check = $row["date"];
+		$pos = strpos($check, "at");
+		$check = substr($check ,0, $pos-1);
+		$at_time = substr($row["date"] ,$pos-1, strlen($row["date"]));
+		if($check == $CURRENT_DAY){
+			echo"Today ".$at_time."</br>";
+		}
+		else if($check == $YESTERDAY){
+			echo"Yesterday ".$at_time."</br>";
+		}
+		else{
+			echo $row["date"]."</br>";
+		}
+				//DATE
         echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
 		if(strlen($row["post"]) > 198){
 			echo "<p>".substr($row["post"], 0,198)."...</p>";
@@ -291,7 +310,7 @@
 		else{
 			echo "<p>".$row["post"]."</p>";
 		}
-		echo "<p>likes: ".$row["likes"]."</p>";
+		echo "<p>votes: ".$row["likes"]."</p>";
 		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
 		$get_comment_r = mysqli_query($conn, $get_comment);
 		$count_comment = 0;
@@ -316,6 +335,21 @@
 		echo "<div class = 'dispdiv'>";
 		echo "<div class=\"posts\">";
 		$value = $row["id"];
+				//DATE
+		$check = $row["date"];
+		$pos = strpos($check, "at");
+		$check = substr($check ,0, $pos-1);
+		$at_time = substr($row["date"] ,$pos-1, strlen($row["date"]));
+		if($check == $CURRENT_DAY){
+			echo"Today ".$at_time."</br>";
+		}
+		else if($check == $YESTERDAY){
+			echo"Yesterday ".$at_time."</br>";
+		}
+		else{
+			echo $row["date"]."</br>";
+		}
+				//DATE
         echo "<a href='forumpost.php?post_id=$value'>".$row["title"]."</a><br>";
 		if(strlen($row["post"]) > 198){
 			echo "<p>".substr($row["post"], 0,198)."...</p>";
@@ -323,7 +357,7 @@
 		else{
 			echo "<p>".$row["post"]."</p>";
 		}
-		echo "<p>likes: ".$row["likes"]."</p>";
+		echo "<p>votes: ".$row["likes"]."</p>";
 		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
 		$get_comment_r = mysqli_query($conn, $get_comment);
 		$count_comment = 0;
