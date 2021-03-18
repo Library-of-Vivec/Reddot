@@ -220,6 +220,16 @@
     cursor:text;
     font-size:12pt;
   }
+  .profcontainer{
+    margin-top:15px;
+    margin-right: 20px;
+    float:right;
+    border-style: solid;
+    width:30em;
+    text-align: center;
+    word-wrap: break-word;
+    height:auto;
+  }
 </style>
   </head>
 <body>
@@ -237,8 +247,6 @@
         while($row = mysqli_fetch_assoc($result1)){
           $username = $row['username'];
           $profpic = $row['profilepic'];
-      //echo "Username: ".$row["username"];
-      //echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
         }
     }
     echo "<div class=\"navbar\">
@@ -268,13 +276,17 @@
 		$search = $_POST['search_field'];
 		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
 	};
+
+  //POSTS MADE BY YOU
 		$username = $_GET['user'];
 		$username_sql = "SELECT username, profilepic ,summary from account WHERE username='".$username."'";
 		$result1 = mysqli_query($conn, $username_sql);
 		$result = mysqli_fetch_assoc($result1);
-		echo "<h1 style='color:white'>Username: ".$result["username"]."</h1>";
-		echo "</br>Profile Pic: <img src=\"".$result["profilepic"]."\" height=500 width=500>";
+    echo "<div class='profcontainer'>";
+		echo "</br><img src=\"".$result["profilepic"]."\" height=250 width=250 style='display:block; margin-left:auto; margin-right:auto; border-radius:150px;'>";
+    	echo "<h1 style='color:black'>".$result["username"]."</h1>";
 		echo "</br>Bio: ".$result["summary"];
+    echo "</div>";
 	?>
 
  <script>
