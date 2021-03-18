@@ -172,7 +172,7 @@
     width:50em;
     font-size:15pt;
   }
-  .dispdiv{
+  .dispdivcreate{
     background-color:rgb(59,59,59);
     margin-top:25px;
     margin-left:15%;
@@ -241,10 +241,9 @@
   	  $CURRENT_DAY = date("M d Y");
   	  $YESTERDAY = date("M d Y", strtotime("-1 days"));
     //DISPLAY USERNAME AND PROFILE PIC
-    $email = $_COOKIE['email'];
     $profpic = "";
     $username = "";
-    $username_sql = "SELECT username, profilepic from account WHERE email='".$email."'";
+    $username_sql = "SELECT username, profilepic from account WHERE username='".$username."'";
     $result1 = mysqli_query($conn, $username_sql);
     if(mysqli_num_rows($result1)>0){
         while($row = mysqli_fetch_assoc($result1)){
@@ -280,16 +279,21 @@
 		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
 	};
 
+  $username = $_GET['user'];
+  $sql = "SELECT email FROM account WHERE username = '$username'";
+  $res = mysqli_query($conn, $sql);
+  $emres = mysqli_fetch_assoc($res);
+  $email = $emres['email'];
   $sql = "SELECT title, email_user, post, id, date, likes FROM forum WHERE email_user = '$email' ORDER BY id DESC";
   $result = mysqli_query($conn, $sql);
-  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
+  if($username == "201811471@feualabang.edu.ph" || $username == "201810285@feualabang.edu.ph" || $username == "201811597@feualabang.edu.ph" || $username == "201811285@feualabang.edu.ph"){
     echo "<form action = '' method = 'post'>";
     while($row = mysqli_fetch_assoc($result)){
       echo "<div class = 'dispdiv'>";
 		echo "<div class=\"posts\">";
 		$value = $row["id"];
 
-				//DATE
+		//DATE
 		$check = $row["date"];
 		$pos = strpos($check, "at");
 		$check = substr($check ,0, $pos-1);
