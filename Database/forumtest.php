@@ -18,13 +18,18 @@
     transform: scaleY(1)
   }
 }
+@font-face{
+  font-family:fontnikelsey;
+  src: url('space-mono.ttf');
+}
   *{
   padding: 0px;
   margin: 0px;
+  font-family:fontnikelsey;
   }
     body {
       font-family: Arial, Helvetica, sans-serif;
-    background-image: url('reddot_bg2.jpg');
+    background-image: url('pages_bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     }
@@ -51,6 +56,7 @@
     }
 
     .dropdown-content a {
+      background-color: rgba(44,55,57,1);
     transition-duration: 0.5s;
       float: none;
       color: black;
@@ -77,7 +83,7 @@
     text-align: right;
     position: sticky;
     top:0;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(44, 53, 57, 1);
     box-shadow:0px 2px 5px grey;
   }
   button{
@@ -93,9 +99,19 @@
     padding: 15px 32px;
   }
   .profile{
+    background-color: rgba(0,0,0,0);
     height: 100%;
     width:160px;
     border-style: none;
+    padding: 15px 32px;
+    display: inline-block;
+    margin-right: 10%;
+  }
+  .profile:hover{
+    background-color: rgba(0,0,0,0);
+    height: 100%;
+    width:160px;
+    border-style: solid;
     padding: 15px 32px;
     display: inline-block;
     margin-right: 10%;
@@ -115,8 +131,6 @@
     height:75px;
     width:75px;
     -webkit-transition-duration:0.5s;
-  }
-  .btnHead:hover{
   }
   .logo{
     float:left;
@@ -150,6 +164,7 @@
     cursor:pointer;
   }
   .searchbox{
+    background-color: rgba(0,0,0,0);
     border-top:none;
     border-left:none;
     border-right:none;
@@ -173,9 +188,25 @@
     font-size:15pt;
   }
   .dispdiv{
-    background-color:rgb(59,59,59);
+    transition-duration: 0.5s;
+    background-color:rgb(130,130,130);
     margin-top:25px;
     margin-left:15%;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+    color:rgb(182,182,180);
+  }
+  .dispdivcreate{
+    border-color:white;
+    background-color:rgb(59,59,59);
+    margin-top:0px;
+    margin-left:15%;
+    margin-bottom:25px;
     float:left;
     border-width: 1px;
     border-style:solid;
@@ -186,7 +217,7 @@
   }
   .dispdiv:hover{
     transition-duration: 0.5s;
-    background-color:rgb(219,217,217);
+    background-color:rgb(59,59,59);
     margin-top:25px;
     margin-left:15%;
     float:left;
@@ -198,6 +229,7 @@
     height:auto;
   }
   .createpost{
+    transition-duration: 0s;
     border-style: hidden;
     border-radius: 6px;
     padding-left:10px;
@@ -209,7 +241,9 @@
     font-size:12pt;
   }
   .createpost:hover{
-    border-style: hidden;
+    transition-duration: 0s;
+    border-style: solid;
+    border-color: black;
     border-radius: 6px;
     background-color:rgb(59,59,59);
     padding-left:10px;
@@ -220,6 +254,78 @@
     cursor:text;
     font-size:12pt;
   }
+  .rightitems{
+    margin-bottom:20px;
+    background-color:white;
+    width:auto;
+    margin-bottom:10px;
+    font-size:15pt;
+    background-color:rgb(59,59,59);
+    color:rgb(182,182,180);
+    border-bottom: solid 1px white;
+    padding:5px;
+
+  }
+  .rightcontainer{
+    background-color:rgb(59,59,59);
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-top:50px;
+    margin-left:1000px;
+    border-width: 0.5px;
+    border-style:solid;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+    border-color: white;
+
+  }
+  a{
+    font-weight: bold;
+    text-decoration: none;
+    color:white;
+  }
+  input[type="submit"]{
+    font-size:13pt;
+    width:auto;
+    color: black;
+    text-align: center;
+    background-color:rgb(130,130,130);
+    border: none;
+    padding:5px;
+    border-radius: 4px;
+}
+.boxcontainer{
+  background-color:rgba(255,255,255,0.5);
+  margin:auto;
+  margin-top: 100px;
+  border-width: 1px;
+  border-style:solid;
+  padding:7px;
+  border-radius: 5px;
+  width:50%;
+}
+.textareas::-webkit-input-placeholder{
+ text-align: center;
+ color:white;
+}
+.textareas{
+  width: 100%;
+  padding:10px;
+  resize: none;
+  background-color:rgb(59,59,59);
+  color:white;
+}
+.submitpost{
+  transition-duration: 0.5s;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+}
+.submitpost:hover{
+  transition-duration: 0.5s;
+  background-color:rgb(87,87,87);
+}
 </style>
   </head>
 <body>
@@ -242,15 +348,16 @@
         }
     }
     echo "<div class=\"navbar\">
-    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_1.png\" height=60 width=60></a>
+    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_white.png\" height=60 width=60></a>
     <div class=\"dropdown\">
     <button class=\"profile\"><img class = \"ppic\" src='$profpic' width=65 height=65>
       <i class=\"fa fa-caret-down\"></i>
       </button>
       <div class=\"dropdown-content\">
-        <a href='profile.php?user=$username'>Profile</a>
-        <a href=\"editprofile.php\">Edit Profile</a>
-        <a onclick =\"signOut()\">Sign Out</a>
+      <a href='profile.php?user=$username'>Profile</a>
+      <a href=\"editprofile.php\">Edit Profile</a>
+      <a href=\"display_all.php\">Liked Posts</a>
+      <a onclick =\"signOut()\">Sign Out</a>
         </div>
     </div>";
     echo "
@@ -292,12 +399,13 @@
   }
 
  ?>
-
+<div class = 'boxcontainer'>
 <form action="" method="post" id="postform">
-  <textarea cols="50" type="text" name="title" placeholder="Title here" id="title_field"></textarea><br>
-  <textarea name="post" placeholder="Post here" rows="5" cols="100" style="resize:none" id="post_field"></textarea><br>
-  <input type="submit" name="submit" value="Submit" id="submitbtn"disabled="disabled"></input>
+  <textarea class = 'textareas' type="text" name="title" placeholder="Title here..." id="title_field" style="resize:none"></textarea><br>
+  <textarea class = 'textareas' name="post" placeholder="Post here..." rows="20"  style="resize:none" id="post_field"></textarea><br>
+  <input class = 'submitpost' type="submit" name="submit" value="Submit" id="submitbtn" disabled="disabled"></input>
 </form>
+</div>
 <script>
 	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
 	check_login();
