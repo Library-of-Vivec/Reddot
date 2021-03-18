@@ -16,10 +16,10 @@ function getCookie(cname) {
 
 function check_login(){
 	if(getCookie("email") == ""){
-		alert('You must logged in first through Gmail');
+		alert('You must be logged in first through Gmail');
 		location.replace("loginpage.php");
 	}
-	
+
 }
 
 function check_reg(){
@@ -27,7 +27,7 @@ function check_reg(){
 		alert('You must complete first your registration.');
 		location.replace("registration.php");
 	}
-	
+
 }
 //setup cookie yung para lang maproceed sa reg2 reg3 kung gugustuhin ng user pero nakinsert na sa database yan pagkaclick
 function check_reg_setup(){
@@ -36,4 +36,3 @@ function check_reg_setup(){
 		location.replace("landingpage.php");
 	}
 }
-
