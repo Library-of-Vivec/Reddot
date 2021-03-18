@@ -8,8 +8,8 @@
 
   <style>
   body{
-    /*background-image: url('reddot_bg.jpg');*/
-    background-color: rgb(44,53,57);
+    background-image: url('Artboard_1.jpg');
+    /*background-color: rgb(44,53,57);*/
     background-size: cover;
   }
   .box{
