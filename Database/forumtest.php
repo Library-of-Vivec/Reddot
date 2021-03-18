@@ -387,14 +387,9 @@
     $sql = "INSERT INTO forum(title, post, email_user, date)
                         VALUES('$title', '$post', '$email', '$DATE_F')";
     $insert = mysqli_query($conn,$sql);
-	echo $title."<br>";
-	echo $post."<br>";
-	echo $email."<br>";
     if($insert){
-      echo "post success";
     }
     else{
-      echo "Post could not be made.";
     }
   }
 
