@@ -387,18 +387,18 @@ echo "
     }
   }
 
-  if(isset($_POST['delsub'])){
+  /*if(isset($_POST['delsub'])){
     foreach($_POST['checkdelete'] as $selected) {
       echo $selected;
-        $sqldel = "DELETE FROM forum WHERE id = '$selected'";
-        $delres = mysqli_query($conn,$sqldel);
+    $sqldel = "DELETE FROM forum WHERE id = '$selected'";
+    $delres = mysqli_query($conn,$sqldel);
 		$sqldel2 = "DELETE FROM likes WHERE post_id = '$selected'";
 		$delres2 = mysqli_query($conn,$sqldel2);
 		$sqldel3 = "DELETE FROM comment WHERE post_id = '$selected'";
 		$delres3 = mysqli_query($conn,$sqldel3);
 }
 	echo "<meta http-equiv='refresh' content = '0'>";
-  }
+}*/
 
  ?>
    <script>
