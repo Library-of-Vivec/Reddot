@@ -18,13 +18,18 @@
     transform: scaleY(1)
   }
 }
+@font-face{
+  font-family:fontnikelsey;
+  src: url('space-mono.ttf');
+}
   *{
   padding: 0px;
   margin: 0px;
+  font-family:fontnikelsey;
   }
     body {
       font-family: Arial, Helvetica, sans-serif;
-    background-image: url('reddot_bg2.jpg');
+    background-image: url('pages_bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     }
@@ -51,6 +56,7 @@
     }
 
     .dropdown-content a {
+      background-color: rgba(44,55,57,1);
     transition-duration: 0.5s;
       float: none;
       color: black;
@@ -77,7 +83,7 @@
     text-align: right;
     position: sticky;
     top:0;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(44, 53, 57, 1);
     box-shadow:0px 2px 5px grey;
   }
   button{
@@ -93,9 +99,19 @@
     padding: 15px 32px;
   }
   .profile{
+    background-color: rgba(0,0,0,0);
     height: 100%;
     width:160px;
     border-style: none;
+    padding: 15px 32px;
+    display: inline-block;
+    margin-right: 10%;
+  }
+  .profile:hover{
+    background-color: rgba(0,0,0,0);
+    height: 100%;
+    width:160px;
+    border-style: solid;
     padding: 15px 32px;
     display: inline-block;
     margin-right: 10%;
@@ -150,6 +166,7 @@
     cursor:pointer;
   }
   .searchbox{
+    background-color: rgba(0,0,0,0);
     border-top:none;
     border-left:none;
     border-right:none;
@@ -159,6 +176,7 @@
     height:2em;
     width:50em;
     font-size:15pt;
+    color:white;
   }
   .searchbox:focus{
     outline:none;
@@ -174,8 +192,8 @@
   }
   .dispdiv{
     transition-duration: 0.5s;
-    background-color:rgb(59,59,59);
-    margin-top:25px;
+    background-color:rgb(130,130,130);
+    margin-top:50px;
     margin-left:15%;
     float:left;
     border-width: 1px;
@@ -184,11 +202,14 @@
     border-radius: 5px;
     width:35%;
     height:auto;
+    color:rgb(182,182,180);
   }
   .dispdivcreate{
+    border-color:white;
     background-color:rgb(59,59,59);
-    margin-top:25px;
+    margin-top:0px;
     margin-left:15%;
+    margin-bottom:25px;
     float:left;
     border-width: 1px;
     border-style:solid;
@@ -199,9 +220,9 @@
   }
   .dispdiv:hover{
     transition-duration: 0.5s;
-    background-color:rgb(219,217,217);
-    margin-top:25px;
-    margin-left:15%;
+    background-color:rgb(59,59,59);
+    margin-top:50px;
+    margin-left:14%;
     float:left;
     border-width: 1px;
     border-style:solid;
@@ -242,21 +263,41 @@
     width:auto;
     margin-bottom:10px;
     font-size:15pt;
+    background-color:rgb(59,59,59);
+    color:rgb(182,182,180);
+    border-bottom: solid 1px white;
+    padding:5px;
 
   }
   .rightcontainer{
+    background-color:rgb(59,59,59);
     overflow-x: hidden;
     overflow-y: auto;
-    margin-top:25px;
-    margin-left:1100px;
-    margin-right:10px;
+    margin-top:50px;
+    margin-left:1000px;
     border-width: 0.5px;
     border-style:solid;
     border-radius: 5px;
     width:35%;
     height:auto;
+    border-color: white;
 
   }
+  a{
+    font-weight: bold;
+    text-decoration: none;
+    color:white;
+  }
+  input[type="submit"]{
+    font-size:13pt;
+    width:auto;
+    color: black;
+    text-align: center;
+    background-color:rgb(130,130,130);
+    border: none;
+    padding:5px;
+    border-radius: 4px;
+}
 </style>
   </head>
 <body>
@@ -282,7 +323,7 @@
         }
     }
     echo "<div class=\"navbar\">
-    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_1.png\" height=60 width=60></a>
+    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_white.png\" height=60 width=60></a>
     <div class=\"dropdown\">
     <button class=\"profile\"><img class = \"ppic\" src='$profpic' width=65 height=65>
       <i class=\"fa fa-caret-down\"></i>
@@ -305,7 +346,7 @@
     //DISPLAY USERNAME AND PROFILE PIC
   //CREATE POST BUTTON
   ?>
-
+  <form action = '' method = 'post'>
   <div class="dispdivcreate"><button class = 'createpost'><a href="forumtest.php" style="text-decoration:none; cursor:text; color:black;">Create Post...</a></button></div>
   <?php
 	if(isset($_POST['search'])){
@@ -315,17 +356,23 @@
 	$sql = "SELECT title, email_user, post, id, date, likes FROM forum ORDER BY id DESC";
   $result = mysqli_query($conn, $sql);
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
-    echo "<form action = '' method = 'post'>";
+
     while($row = mysqli_fetch_assoc($result)){
       echo "<div class = 'dispdiv'>";
 		echo "<div class=\"posts\">";
 		$value = $row["id"];
-
+    $get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
+		}
 				//DATE
 		$check = $row["date"];
 		$pos = strpos($check, "at");
 		$check = substr($check ,0, $pos-1);
 		$at_time = substr($row["date"] ,$pos-1, strlen($row["date"]));
+  echo "<div style='float:right;'>";
 		if($check == $CURRENT_DAY){
 			echo"Today ".$at_time."</br>";
 		}
@@ -335,31 +382,27 @@
 		else{
 			echo $row["date"]."</br>";
 		}
+    echo "</div>";
 				//DATE
-        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
+    echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
 		if(strlen($row["post"]) > 198){
 			echo "<p>".substr($row["post"], 0,198)."...</p>";
 		}
 		else{
 			echo "<p>".$row["post"]."</p>";
 		}
-		echo "<p>votes: ".$row["likes"]."</p>";
+		echo "<p>Votes: ".$row["likes"]."</p>";
 		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
 		$get_comment_r = mysqli_query($conn, $get_comment);
 		$count_comment = 0;
 		while($row2 = mysqli_fetch_assoc($get_comment_r)){
 			$count_comment = $count_comment + 1;
 		}
-		echo "<p>comments: ".$count_comment."</p></div>";
-		$get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
-		$get_user_r = mysqli_query($conn, $get_user);
-		while($row1 = mysqli_fetch_assoc($get_user_r)){
-			echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
-			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
-		}
+		echo "<p>Comments: ".$count_comment."</p></div>";
+
     echo "</div>";
     }
-    echo "<input type='submit' name = 'delsub' value = 'Delete'>";
+    echo "<input type='submit' name = 'delsub' value = 'Delete Posts' style='position: absolute; left:289px; top:200px;'>";
     echo "</form>";
   }
   else{
@@ -367,12 +410,19 @@
     while($row = mysqli_fetch_assoc($result)){
       echo "<div class = 'dispdiv'>";
 		echo "<div class=\"posts\">";
+    $get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a><br>";
+		}
 		$value = $row["id"];
 						//DATE
 		$check = $row["date"];
 		$pos = strpos($check, "at");
 		$check = substr($check ,0, $pos-1);
 		$at_time = substr($row["date"] ,$pos-1, strlen($row["date"]));
+    echo "<div style='float:right;'>";
 		if($check == $CURRENT_DAY){
 			echo"Today ".$at_time."</br>";
 		}
@@ -382,6 +432,7 @@
 		else{
 			echo $row["date"]."</br>";
 		}
+    echo "</div>";
 						//DATE
 		echo "<a href='forumpost.php?post_id=$value'>".$row["title"]."</a><br>";
 		if(strlen($row["post"]) > 198){
@@ -390,20 +441,15 @@
 		else{
 			echo "<p>".$row["post"]."</p>";
 		}
-		echo "<p>votes: ".$row["likes"]."</p>";
+		echo "<p>Votes: ".$row["likes"]."</p>";
 		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
 		$get_comment_r = mysqli_query($conn, $get_comment);
 		$count_comment = 0;
 		while($row2 = mysqli_fetch_assoc($get_comment_r)){
 			$count_comment = $count_comment + 1;
 		}
-		echo "<p>comments: ".$count_comment."</p></div>";
-		$get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
-		$get_user_r = mysqli_query($conn, $get_user);
-		while($row1 = mysqli_fetch_assoc($get_user_r)){
-			echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
-			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
-		}
+		echo "<p>Comments: ".$count_comment."</p></div>";
+
     echo "</div>";
     }
   }
@@ -412,10 +458,17 @@
   $sqlliked = "SELECT title, email_user, post, id, date, likes FROM forum ORDER BY likes DESC LIMIT 3";
   $resultliked = mysqli_query($conn, $sqlliked);
   echo "<div class = 'rightcontainer'>";
-  echo "<h1>Top 3 Posts</h1>";
+  echo "<h1 style='text-align:center; color:white; padding:5px; font-weight:bolder;'>TOP 3 POSTS</h1>";
+  echo "<hr>";
   while($row = mysqli_fetch_assoc($resultliked)){
   echo "<div class = 'rightitems'>";
   echo "<div class=\"posts\">";
+  $get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+  $get_user_r = mysqli_query($conn, $get_user);
+  while($row1 = mysqli_fetch_assoc($get_user_r)){
+    echo "<p></p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+    echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
+  }
   $value = $row["id"];
           //DATE
   $check = $row["date"];
@@ -439,24 +492,18 @@
   else{
     echo "<p>".$row["post"]."</p>";
   }
-  echo "<p>votes: ".$row["likes"]."</p>";
+  echo "<p>Votes: ".$row["likes"]."</p>";
   $get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
   $get_comment_r = mysqli_query($conn, $get_comment);
   $count_comment = 0;
   while($row2 = mysqli_fetch_assoc($get_comment_r)){
     $count_comment = $count_comment + 1;
   }
-  echo "<p>comments: ".$count_comment."</p></div>";
-  $get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
-  $get_user_r = mysqli_query($conn, $get_user);
-  while($row1 = mysqli_fetch_assoc($get_user_r)){
-    echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
-    echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
-  }
+  echo "<p>Comments: ".$count_comment."</p></div>";
 
   }
   echo "</div>";
-
+//MOSTLIKED
 
   if(isset($_POST['delsub'])){
     foreach($_POST['checkdelete'] as $selected) {
