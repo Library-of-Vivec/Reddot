@@ -19,13 +19,18 @@
     transform: scaleY(1)
   }
 }
+@font-face{
+  font-family:fontnikelsey;
+  src: url('space-mono.ttf');
+}
   *{
   padding: 0px;
   margin: 0px;
+  font-family:fontnikelsey;
   }
     body {
       font-family: Arial, Helvetica, sans-serif;
-    background-image: url('reddot_bg2.jpg');
+    background-image: url('pages_bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     }
@@ -52,6 +57,7 @@
     }
 
     .dropdown-content a {
+      background-color: rgba(44,55,57,1);
     transition-duration: 0.5s;
       float: none;
       color: black;
@@ -78,7 +84,7 @@
     text-align: right;
     position: sticky;
     top:0;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(44, 53, 57, 1);
     box-shadow:0px 2px 5px grey;
   }
   button{
@@ -94,9 +100,19 @@
     padding: 15px 32px;
   }
   .profile{
+    background-color: rgba(0,0,0,0);
     height: 100%;
     width:160px;
     border-style: none;
+    padding: 15px 32px;
+    display: inline-block;
+    margin-right: 10%;
+  }
+  .profile:hover{
+    background-color: rgba(0,0,0,0);
+    height: 100%;
+    width:160px;
+    border-style: solid;
     padding: 15px 32px;
     display: inline-block;
     margin-right: 10%;
@@ -151,6 +167,7 @@
     cursor:pointer;
   }
   .searchbox{
+    background-color: rgba(0,0,0,0);
     border-top:none;
     border-left:none;
     border-right:none;
@@ -160,6 +177,7 @@
     height:2em;
     width:50em;
     font-size:15pt;
+    color:white;
   }
   .searchbox:focus{
     outline:none;
@@ -174,9 +192,25 @@
     font-size:15pt;
   }
   .dispdiv{
+    transition-duration: 0.5s;
+    background-color:rgb(130,130,130);
+    margin-top:50px;
+    margin-left:33%;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+    color:rgb(182,182,180);
+  }
+  .dispdivcreate{
+    border-color:white;
     background-color:rgb(59,59,59);
-    margin-top:25px;
+    margin-top:0px;
     margin-left:15%;
+    margin-bottom:25px;
     float:left;
     border-width: 1px;
     border-style:solid;
@@ -187,9 +221,9 @@
   }
   .dispdiv:hover{
     transition-duration: 0.5s;
-    background-color:rgb(219,217,217);
-    margin-top:25px;
-    margin-left:15%;
+    background-color:rgb(59,59,59);
+    margin-top:50px;
+    margin-left:32%;
     float:left;
     border-width: 1px;
     border-style:solid;
@@ -199,6 +233,7 @@
     height:auto;
   }
   .createpost{
+    transition-duration: 0s;
     border-style: hidden;
     border-radius: 6px;
     padding-left:10px;
@@ -210,7 +245,9 @@
     font-size:12pt;
   }
   .createpost:hover{
-    border-style: hidden;
+    transition-duration: 0s;
+    border-style: solid;
+    border-color: black;
     border-radius: 6px;
     background-color:rgb(59,59,59);
     padding-left:10px;
@@ -221,11 +258,52 @@
     cursor:text;
     font-size:12pt;
   }
+  .rightitems{
+    margin-bottom:20px;
+    background-color:white;
+    width:auto;
+    margin-bottom:10px;
+    font-size:15pt;
+    background-color:rgb(59,59,59);
+    color:rgb(182,182,180);
+    border-bottom: solid 1px white;
+    padding:5px;
+
+  }
+  .rightcontainer{
+    background-color:rgb(59,59,59);
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-top:50px;
+    margin-left:1000px;
+    border-width: 0.5px;
+    border-style:solid;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+    border-color: white;
+
+  }
+  a{
+    font-weight: bold;
+    text-decoration: none;
+    color:white;
+  }
+  input[type="submit"]{
+    font-size:13pt;
+    width:auto;
+    color: black;
+    text-align: center;
+    background-color:rgb(130,130,130);
+    border: none;
+    padding:5px;
+    border-radius: 4px;
+}
 </style>
   </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-<?php 
+<?php
      include 'config.php';
     //DISPLAY USERNAME AND PROFILE PIC
     $email = $_COOKIE['email'];
@@ -248,9 +326,10 @@
       <i class=\"fa fa-caret-down\"></i>
       </button>
       <div class=\"dropdown-content\">
-        <a href='profile.php?user=$username'>Profile</a>
-        <a href=\"editprofile.php\">Edit Profile</a>
-        <a onclick =\"signOut()\">Sign Out</a>
+      <a href='profile.php?user=$username'>Profile</a>
+      <a href=\"editprofile.php\">Edit Profile</a>
+      <a href=\"display_all.php\">Liked Posts</a>
+      <a onclick =\"signOut()\">Sign Out</a>
         </div>
     </div>";
     echo "
@@ -267,23 +346,34 @@
 		$search = $_POST['search_field'];
 		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
 	}
-    include 'config.php';
+  include 'config.php';
 	$sql = "SELECT username from account WHERE email='".$email."'";
 	$unamesql = mysqli_query($conn, $sql);
 	$unameres = mysqli_fetch_assoc($unamesql);
 	$uname = $unameres['username'];
-    $sql = "SELECT post_id FROM likes WHERE username = '$uname'";
+  $sql = "SELECT post_id FROM likes WHERE username = '$uname'";
 	$postidsql = mysqli_query($conn, $sql);
 	$postidres = mysqli_fetch_assoc($postidsql);
-    $result = mysqli_query($conn, $sql);
+  $result = mysqli_query($conn, $sql);
 	while($row = mysqli_fetch_assoc($result)){
 		$value = $row["post_id"];
-		$title_sql = "SELECT title from forum WHERE id='".$value."'";
+		$title_sql = "SELECT title, email_user, post, id, date FROM forum WHERE id='".$value."'";
 		$title_sql_r = mysqli_query($conn, $title_sql);
 		while($row1 = mysqli_fetch_assoc($title_sql_r)){
+      echo "<div class = 'dispdiv'>";
+      $emailposter = $row1['email_user'];
+      //get username of poster
+      $sqluser = "SELECT username, profilepic FROM account where email = '$emailposter'";
+      $userquery = mysqli_query($conn, $sqluser);
+      $rowuname = mysqli_fetch_assoc($userquery);
+      $username = $rowuname['username'];
+      $profpic = $rowuname['profilepic'];
+      echo "<img src= '$profpic' height = '25' width = '25'>";
+  		echo "<a href='profile.php?user=".$rowuname["username"]."'>".$rowuname["username"]."</a><br>";
 		  echo "<a href='forumpost.php?post_id=$value'>".$row1["title"]."</a><br>";
-		}
-
+      echo $row1['post']."<br>";
+      echo "</div></div>";
+		  }
     }
 ?>
   <script>
