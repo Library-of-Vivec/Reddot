@@ -237,6 +237,9 @@
 
     <?php
       include 'config.php';
+      date_default_timezone_set('Asia/Manila');
+  	  $CURRENT_DAY = date("M d Y");
+  	  $YESTERDAY = date("M d Y", strtotime("-1 days"));
     //DISPLAY USERNAME AND PROFILE PIC
     $email = $_COOKIE['email'];
     $profpic = "";
@@ -276,6 +279,102 @@
 		$search = $_POST['search_field'];
 		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
 	};
+
+  $sql = "SELECT title, email_user, post, id, date, likes FROM forum WHERE email_user = '$email' ORDER BY id DESC";
+  $result = mysqli_query($conn, $sql);
+  if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
+    echo "<form action = '' method = 'post'>";
+    while($row = mysqli_fetch_assoc($result)){
+      echo "<div class = 'dispdiv'>";
+		echo "<div class=\"posts\">";
+		$value = $row["id"];
+
+				//DATE
+		$check = $row["date"];
+		$pos = strpos($check, "at");
+		$check = substr($check ,0, $pos-1);
+		$at_time = substr($row["date"] ,$pos-1, strlen($row["date"]));
+		if($check == $CURRENT_DAY){
+			echo"Today ".$at_time."</br>";
+		}
+		else if($check == $YESTERDAY){
+			echo"Yesterday ".$at_time."</br>";
+		}
+		else{
+			echo $row["date"]."</br>";
+		}
+				//DATE
+        echo "<input type = 'checkbox' name = 'checkdelete[]' value = \"".$row["id"]."\"><a href='forumpost.php?post_id=$value'>".$row["title"]."</input></a><br>";
+		if(strlen($row["post"]) > 198){
+			echo "<p>".substr($row["post"], 0,198)."...</p>";
+		}
+		else{
+			echo "<p>".$row["post"]."</p>";
+		}
+		echo "<p>votes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
+		}
+    echo "</div>";
+    }
+    echo "<input type='submit' name = 'delsub' value = 'Delete'>";
+    echo "</form>";
+  }
+  else{
+
+    while($row = mysqli_fetch_assoc($result)){
+      echo "<div class = 'dispdiv'>";
+		echo "<div class=\"posts\">";
+		$value = $row["id"];
+						//DATE
+		$check = $row["date"];
+		$pos = strpos($check, "at");
+		$check = substr($check ,0, $pos-1);
+		$at_time = substr($row["date"] ,$pos-1, strlen($row["date"]));
+		if($check == $CURRENT_DAY){
+			echo"Today ".$at_time."</br>";
+		}
+		else if($check == $YESTERDAY){
+			echo"Yesterday ".$at_time."</br>";
+		}
+		else{
+			echo $row["date"]."</br>";
+		}
+						//DATE
+		echo "<a href='forumpost.php?post_id=$value'>".$row["title"]."</a><br>";
+		if(strlen($row["post"]) > 198){
+			echo "<p>".substr($row["post"], 0,198)."...</p>";
+		}
+		else{
+			echo "<p>".$row["post"]."</p>";
+		}
+		echo "<p>votes: ".$row["likes"]."</p>";
+		$get_comment = "SELECT comment from comment WHERE post_id='".$value."'";
+		$get_comment_r = mysqli_query($conn, $get_comment);
+		$count_comment = 0;
+		while($row2 = mysqli_fetch_assoc($get_comment_r)){
+			$count_comment = $count_comment + 1;
+		}
+		echo "<p>comments: ".$count_comment."</p></div>";
+		$get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
+		$get_user_r = mysqli_query($conn, $get_user);
+		while($row1 = mysqli_fetch_assoc($get_user_r)){
+			echo "<p>posted by: </p><img src=\"".$row1["profilepic"]."\" height=\"25\" width=\"25\">";
+			echo "<a href='profile.php?user=".$row1["username"]."'>".$row1["username"]."</a></div>";
+		}
+    echo "</div>";
+    }
+  }
 
   //POSTS MADE BY YOU
 		$username = $_GET['user'];
