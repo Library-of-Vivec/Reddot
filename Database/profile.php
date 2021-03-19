@@ -466,14 +466,46 @@
 
   //POSTS MADE BY YOU
 		$username = $_GET['user'];
-		$username_sql = "SELECT username, profilepic ,summary from account WHERE username='".$username."'";
+		$username_sql = "SELECT username, profilepic ,summary, email from account WHERE username='".$username."'";
 		$result1 = mysqli_query($conn, $username_sql);
 		$result = mysqli_fetch_assoc($result1);
     echo "<div class='profcontainer'>";
 		echo "</br><img src=\"".$result["profilepic"]."\" height=250 width=250 style='display:block; margin-left:auto; margin-right:auto; border-radius:150px;'>";
     	echo "<h1 style='color:rgb(217,54,54)'>".$result["username"]."</h1>";
 		echo "</br>Bio: ".$result["summary"];
+		//if own profile
+		if($result["email"] == $_COOKIE['email']){
+			echo "<form method=\"POST\">";
+			echo "<input onclick =\"signOut()\" type=\"submit\" name=\"delacc\" value=\"Delete Account\"/></form>";
+		}
+		//if admin
+		else if($_COOKIE['email'] == "201811471@feualabang.edu.ph" || $_COOKIE['email'] == "201810285@feualabang.edu.ph" || $_COOKIE['email'] == "201811597@feualabang.edu.ph" || $_COOKIE['email'] == "201811285@feualabang.edu.ph"){
+			echo "<form method=\"POST\">";
+			echo "<input type=\"submit\" name=\"delacc\" value=\"Delete Account\"/></form>";
+		}
     echo "</div>";
+	  if(isset($_POST["delacc"])){
+		$sqldel = "DELETE FROM account WHERE username = '".$result["username"]."'";
+		$delres = mysqli_query($conn,$sqldel);
+		$upd_likes = "SELECT post_id FROM likes WHERE username ='".$result["username"]."'";
+		$upd_res = mysqli_query($conn,$upd_likes);
+		while($row = mysqli_fetch_assoc($upd_res)){
+			$like_id = $row["post_id"];
+			$upd_likes2 = "UPDATE forum SET likes = likes - 1 WHERE id = '$like_id'";
+			$upd_res2 = mysqli_query($conn,$upd_likes2);
+		}
+		$sqldel2 = "DELETE FROM likes WHERE username = '".$result["username"]."'";
+		$delres2 = mysqli_query($conn,$sqldel2);
+		$sqldel3 = "DELETE FROM comment WHERE username = '".$result["username"]."'";
+		$delres3 = mysqli_query($conn,$sqldel3);
+		$sqldel4 = "DELETE FROM forum WHERE username = '".$result["username"]."'";
+		$delres4 = mysqli_query($conn,$sqldel4);
+		$sqldel5 = "DELETE FROM report WHERE username = '".$result["username"]."'";
+		$delres5 = mysqli_query($conn,$sqldel5);
+		//delete profilepic in folder
+		unlink($result["profilepic"]);
+		echo "<script> location.replace(\"landingpage.php\"); </script>";
+	  }
 	?>
 
  <script>

@@ -361,7 +361,6 @@ echo "
   $sql = "SELECT username, summary, profilepic FROM account WHERE username LIKE '%$search%'";
   $result = mysqli_query($conn, $sql);
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
-    echo "admin page<br>";
     echo "<form action = '' method = 'post'>";
     while($row = mysqli_fetch_assoc($result)){
 		echo "<div class = 'dispdiv'>";
@@ -387,18 +386,35 @@ echo "
     }
   }
 
-  /*if(isset($_POST['delsub'])){
+  if(isset($_POST['delsub'])){
     foreach($_POST['checkdelete'] as $selected) {
-      echo $selected;
-    $sqldel = "DELETE FROM forum WHERE id = '$selected'";
-    $delres = mysqli_query($conn,$sqldel);
-		$sqldel2 = "DELETE FROM likes WHERE post_id = '$selected'";
+		$del_pic = "SELECT profilepic FROM account WHERE username ='$selected'";
+		$del_respic = mysqli_query($conn, $del_pic);
+		while($row2 = mysqli_fetch_assoc($del_respic)){
+			unlink($row2["profilepic"]);
+		}
+		$sqldel = "DELETE FROM account WHERE username = '$selected'";
+		$delres = mysqli_query($conn,$sqldel);
+		$upd_likes = "SELECT post_id FROM likes WHERE username ='$selected'";
+		$upd_res = mysqli_query($conn,$upd_likes);
+		while($row = mysqli_fetch_assoc($upd_res)){
+			$like_id = $row["post_id"];
+			$upd_likes2 = "UPDATE forum SET likes = likes - 1 WHERE id = '$like_id'";
+			$upd_res2 = mysqli_query($conn,$upd_likes2);
+		}
+		$sqldel2 = "DELETE FROM likes WHERE username = '$selected'";
 		$delres2 = mysqli_query($conn,$sqldel2);
-		$sqldel3 = "DELETE FROM comment WHERE post_id = '$selected'";
+		$sqldel3 = "DELETE FROM comment WHERE username = '$selected'";
 		$delres3 = mysqli_query($conn,$sqldel3);
+		$sqldel4 = "DELETE FROM forum WHERE username = '$selected'";
+		$delres4 = mysqli_query($conn,$sqldel4);
+		$sqldel5 = "DELETE FROM report WHERE username = '$selected'";
+		$delres5 = mysqli_query($conn,$sqldel5);
+
+
 }
 	echo "<meta http-equiv='refresh' content = '0'>";
-}*/
+}
 
  ?>
    <script>

@@ -325,12 +325,7 @@
 </style>
   </head>
   <body>
-  <script>
-	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
-	check_login();
-	///IF USER HASN't REGISTERED YET in functions.js/////
-	check_reg();
-  </script>
+
   <div class='dispdiv'>
     <form action="" enctype="multipart/form-data" method="post">
 		Set a Profile Picture:<br>
@@ -362,9 +357,19 @@
 	}
 	else{
 	}
+	echo "<form method=\"POST\">";
+    echo "<input type=\"submit\" name=\"skip\" value=\"Skip\"/></form>";
+	if(isset($_POST["skip"])){
+		echo "<script> location.replace(\"landingpage.php\"); </script>";
+	}
 	?>
-
-
 </div>
+    <script>
+
+	//// IF USER HASNT LOGGED IN VALIDATION in functions.js///
+	check_login();
+	///IF USER HASN't REGISTERED YET in functions.js/////
+	check_reg();
+  </script>
   </body>
  </html>

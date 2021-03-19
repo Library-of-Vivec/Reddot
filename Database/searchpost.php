@@ -366,7 +366,6 @@
   $sql = "SELECT title, email_user, post, id, date, likes FROM forum WHERE title LIKE '%$search%' OR post LIKE '%$search%'";
   $result = mysqli_query($conn, $sql);
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
-    echo "admin page<br>";
     echo "<form action = '' method = 'post'>";
     while($row = mysqli_fetch_assoc($result)){
 		echo "<div class = 'dispdiv'>";

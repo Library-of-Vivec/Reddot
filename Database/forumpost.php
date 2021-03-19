@@ -564,6 +564,15 @@ echo "<div class = 'dispdiv'>";
 	//// IF USER HASNT REGISTERED VALIDATION in functions.js///
 	check_reg();
 	////GOOGLE SIGN BUTTON FUNCTION but hidden///////
+	window.addEventListener( "pageshow", function ( event ) {
+	  var historyTraversal = event.persisted || 
+							 ( typeof window.performance != "undefined" && 
+								  window.performance.navigation.type === 2 );
+	  if ( historyTraversal ) {
+		// Handle page restore.
+		window.location.reload();
+	  }
+	});
 	var x = document.getElementById("signin_");
 	x.style.display = "none";
 	function onSignIn(googleUser){

@@ -384,10 +384,11 @@
 	$TIME = date("G:i A");
 	$DATE = date("M d Y");
 	$DATE_F = $DATE.' at '.$TIME;
-    $sql = "INSERT INTO forum(title, post, email_user, date)
-                        VALUES('$title', '$post', '$email', '$DATE_F')";
+    $sql = "INSERT INTO forum(title, post, email_user, date, username)
+                        VALUES('$title', '$post', '$email', '$DATE_F', '$username')";
     $insert = mysqli_query($conn,$sql);
     if($insert){
+		echo "<script> location.replace(\"landingpage.php\"); </script>";
     }
     else{
     }
