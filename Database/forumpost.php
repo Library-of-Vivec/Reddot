@@ -1,6 +1,8 @@
 
 <html>
   <head>
+    <title>redDot: FEU Community Forum</title>
+    <link rel="shortcut icon" href="favicon.png">
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script
   src="https://apis.google.com/js/platform.js" async defer>
@@ -167,6 +169,7 @@
     cursor:pointer;
   }
   .searchbox{
+    transition-duration: 1s;
     background-color: rgba(0,0,0,0);
     border-top:none;
     border-left:none;
@@ -175,11 +178,12 @@
     margin-top:30px;
     margin-left:325px;
     height:2em;
-    width:50em;
+    width:6em;
     font-size:15pt;
     color:white;
   }
   .searchbox:focus{
+    transition-duration: 1s;
     outline:none;
     border-left:none;
     border-top:none;
@@ -336,6 +340,20 @@
     padding:5px;
     border-radius: 4px;
   }
+  .textareas::-webkit-input-placeholder{
+   text-align: center;
+   color:white;
+  }
+  .textareas{
+    width: 100%;
+    padding:10px;
+    resize: none;
+    background-color:rgb(59,59,59);
+    color:white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
   </style>
   </head>
 <body>
@@ -360,7 +378,7 @@
         }
     }
     echo "<div class=\"navbar\">
-    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_1.png\" height=60 width=60></a>
+    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_white.png\" height=60 width=60></a>
     <div class=\"dropdown\">
     <button class=\"profile\"><img class = \"ppic\" src='$profpic' width=65 height=65>
       <i class=\"fa fa-caret-down\"></i>
@@ -411,7 +429,7 @@ echo "<div class = 'dispdiv'>";
 	else{
 	  if(mysqli_num_rows($reports) != 0){
 		  echo "<form action='' method = 'post'>";
-		  echo "<input type = 'submit' name = 'cancelreppost' value = 'Cancel Report'></input>";
+		  echo "<input type = 'submit' name = 'cancelreppost' value = 'Cancel Report' style='float:right;'></input>";
 		  echo "</form>";
 	  }
 	  else{
@@ -424,9 +442,9 @@ echo "<div class = 'dispdiv'>";
 			$get_user = "SELECT username from account WHERE email='".$row["email_user"]."'";
 			$get_user_r = mysqli_query($conn, $get_user);
 			while($row1 = mysqli_fetch_assoc($get_user_r)){
-				echo "<h2 style='color:green'> Posted BY: ".$row1['username']."</h2><br>";;
+				echo "<h2 style='color:rgb(217,54,54)'> Posted By: ".$row1['username']."</h2><br>";;
 			}
-			echo "<h2> Title: ".$row["title"]."</h2><br>";
+			echo "<h2>".$row["title"]."</h2><br>";
 			echo $row["post"];
 			echo "<br><br><br>";
 
@@ -438,8 +456,7 @@ echo "<div class = 'dispdiv'>";
 	$sql = "SELECT * FROM likes WHERE username = '$uname' AND post_id = '$id'";
 	$likes = mysqli_query($conn, $sql);
 
-	echo "<form method=\"POST\">";
-    echo "<input type=\"submit\" name=\"like\" value=\"Upvote\"/></form>";
+
 
 	if(mysqli_num_rows($likes) != 0) {
 		echo "You upvoted this post.";
@@ -552,10 +569,12 @@ echo "<div class = 'dispdiv'>";
     }
 ?>
 
-
 <form action="" method="post" id="comment_form">
-  <textarea name="comment" placeholder="Comment here" rows="5" cols = "82" style="resize:none;" id="comment_field" ></textarea><br>
-  <input type="submit" name="submit" value="Submit" id="submitbtn" disabled="disabled"></input>
+  <textarea name="comment" class = "textareas" placeholder="Comment here" rows="5" cols = "82" id="comment_field" ></textarea><br>
+  <input type="submit" name="submit" value="Submit" id="submitbtn" disabled="disabled" style="float:right;"></input>
+</form>
+<form method="POST">
+<input type="submit" name="like" value="Upvote">
 </form>
 </div>
   <script>
@@ -565,8 +584,8 @@ echo "<div class = 'dispdiv'>";
 	check_reg();
 	////GOOGLE SIGN BUTTON FUNCTION but hidden///////
 	window.addEventListener( "pageshow", function ( event ) {
-	  var historyTraversal = event.persisted || 
-							 ( typeof window.performance != "undefined" && 
+	  var historyTraversal = event.persisted ||
+							 ( typeof window.performance != "undefined" &&
 								  window.performance.navigation.type === 2 );
 	  if ( historyTraversal ) {
 		// Handle page restore.
