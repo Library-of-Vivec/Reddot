@@ -1,6 +1,8 @@
 
 <html>
   <head>
+    <title>redDot: FEU Community Forum</title>
+    <link rel="shortcut icon" href="favicon.png">
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script
   src="https://apis.google.com/js/platform.js" async defer>
@@ -19,13 +21,18 @@
     transform: scaleY(1)
   }
 }
+@font-face{
+  font-family:fontnikelsey;
+  src: url('space-mono.ttf');
+}
   *{
   padding: 0px;
   margin: 0px;
+  font-family:fontnikelsey;
   }
     body {
       font-family: Arial, Helvetica, sans-serif;
-    background-image: url('reddot_bg2.jpg');
+    background-image: url('pages_bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     }
@@ -52,6 +59,7 @@
     }
 
     .dropdown-content a {
+      background-color: rgba(44,55,57,1);
     transition-duration: 0.5s;
       float: none;
       color: black;
@@ -78,7 +86,7 @@
     text-align: right;
     position: sticky;
     top:0;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(44, 53, 57, 1);
     box-shadow:0px 2px 5px grey;
   }
   button{
@@ -94,9 +102,19 @@
     padding: 15px 32px;
   }
   .profile{
+    background-color: rgba(0,0,0,0);
     height: 100%;
     width:160px;
     border-style: none;
+    padding: 15px 32px;
+    display: inline-block;
+    margin-right: 10%;
+  }
+  .profile:hover{
+    background-color: rgba(0,0,0,0);
+    height: 100%;
+    width:160px;
+    border-style: solid;
     padding: 15px 32px;
     display: inline-block;
     margin-right: 10%;
@@ -116,8 +134,6 @@
     height:75px;
     width:75px;
     -webkit-transition-duration:0.5s;
-  }
-  .btnHead:hover{
   }
   .logo{
     float:left;
@@ -151,6 +167,8 @@
     cursor:pointer;
   }
   .searchbox{
+    transition-duration: 1s;
+    background-color: rgba(0,0,0,0);
     border-top:none;
     border-left:none;
     border-right:none;
@@ -158,10 +176,12 @@
     margin-top:30px;
     margin-left:325px;
     height:2em;
-    width:50em;
+    width:6em;
     font-size:15pt;
+    color:white;
   }
   .searchbox:focus{
+    transition-duration: 1s;
     outline:none;
     border-left:none;
     border-top:none;
@@ -174,9 +194,25 @@
     font-size:15pt;
   }
   .dispdiv{
-    background-color:rgb(59,59,59);
+    transition-duration: 0.5s;
+    background-color:rgb(130,130,130);
     margin-top:25px;
     margin-left:15%;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+    color:rgb(182,182,180);
+  }
+  .dispdivcreate{
+    border-color:white;
+    background-color:rgb(59,59,59);
+    margin-top:0px;
+    margin-left:15%;
+    margin-bottom:25px;
     float:left;
     border-width: 1px;
     border-style:solid;
@@ -187,7 +223,7 @@
   }
   .dispdiv:hover{
     transition-duration: 0.5s;
-    background-color:rgb(219,217,217);
+    background-color:rgb(59,59,59);
     margin-top:25px;
     margin-left:15%;
     float:left;
@@ -199,6 +235,7 @@
     height:auto;
   }
   .createpost{
+    transition-duration: 0s;
     border-style: hidden;
     border-radius: 6px;
     padding-left:10px;
@@ -210,7 +247,9 @@
     font-size:12pt;
   }
   .createpost:hover{
-    border-style: hidden;
+    transition-duration: 0s;
+    border-style: solid;
+    border-color: black;
     border-radius: 6px;
     background-color:rgb(59,59,59);
     padding-left:10px;
@@ -221,11 +260,83 @@
     cursor:text;
     font-size:12pt;
   }
+  .rightitems{
+    margin-bottom:20px;
+    background-color:white;
+    width:auto;
+    margin-bottom:10px;
+    font-size:15pt;
+    background-color:rgb(59,59,59);
+    color:rgb(182,182,180);
+    border-bottom: solid 1px white;
+    padding:5px;
+
+  }
+  .rightcontainer{
+    background-color:rgb(59,59,59);
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-top:50px;
+    margin-left:1000px;
+    border-width: 0.5px;
+    border-style:solid;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+    border-color: white;
+
+  }
+  a{
+    font-weight: bold;
+    text-decoration: none;
+    color:white;
+  }
+  input[type="submit"]{
+    font-size:13pt;
+    width:auto;
+    color: black;
+    text-align: center;
+    background-color:rgb(130,130,130);
+    border: none;
+    padding:5px;
+    border-radius: 4px;
+}
+.boxcontainer{
+  background-color:rgba(255,255,255,0.5);
+  margin:auto;
+  margin-top: 100px;
+  border-width: 1px;
+  border-style:solid;
+  padding:7px;
+  border-radius: 5px;
+  width:50%;
+}
+.textareas::-webkit-input-placeholder{
+ text-align: center;
+ color:white;
+}
+.textareas{
+  width: 100%;
+  padding:10px;
+  resize: none;
+  background-color:rgb(59,59,59);
+  color:white;
+}
+.submitpost{
+  transition-duration: 0.5s;
+  margin-left:auto;
+  margin-right:0;
+  display:block;
+}
+.submitpost:hover{
+  transition-duration: 0.5s;
+  background-color:rgb(87,87,87);
+}
 </style>
   </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn" id="signin_"></div>
-<?php 
+<?php
      include 'config.php';
     //DISPLAY USERNAME AND PROFILE PIC
     $email = $_COOKIE['email'];
@@ -277,11 +388,12 @@
 	$title_postres = mysqli_fetch_assoc($title_postsql);
 	$title_res = $title_postres['title'];
 	$post_res = $title_postres['post'];
+  echo "<div class = 'boxcontainer'>";
 	echo "<form action=\"\" method=\"post\" id=\"postform\">";
-    echo "<textarea type=\"text\"  cols=\"50\" name=\"title\" id=\"title_field\">".$title_res."</textarea><br>";
-    echo "<textarea name=\"post\"  rows=\"5\" cols=\"100\" style=\"resize:none\" id=\"post_field\">".$post_res."</textarea><br>";
-    echo "<input type=\"submit\" name=\"submit\" value=\"Edit Post\" id=\"submitbtn\" disabled=\"disabled\"></input></form>";
-
+    echo "<textarea type=\"text\"  class=\"textareas\" cols=\"50\" name=\"title\" id=\"title_field\">".$title_res."</textarea><br>";
+    echo "<textarea name=\"post\"  class=\"textareas\" rows=\"20\" cols=\"100\" style=\"resize:none\" id=\"post_field\">".$post_res."</textarea><br>";
+    echo "<input type=\"submit\" class = \"submitpost\" name=\"submit\" value=\"Edit Post\" id=\"submitbtn\" disabled=\"disabled\"></input></form>";
+    echo "</div>";
 
   if(isset($_POST['submit'])){
     $title = $_POST['title'];
