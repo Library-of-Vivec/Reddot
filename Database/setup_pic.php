@@ -1,5 +1,7 @@
 <html>
   <head>
+    <title>redDot: FEU Community Forum</title>
+    <link rel="shortcut icon" href="favicon.png">
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer> </script>
   <script src="functions.js"></script>
@@ -315,23 +317,24 @@
 }
 .submitpost{
   transition-duration: 0.5s;
-  margin-left:auto;
-  margin-right:auto;
 }
 .submitpost:hover{
   transition-duration: 0.5s;
   background-color:rgb(87,87,87);
+}
+div input[type="submit"]{
+  display: block;
+  margin-left: 10;
+  margin-right: auto;
+  float:right;
+
 }
 </style>
   </head>
   <body>
 
   <div class='dispdiv'>
-    <form action="" enctype="multipart/form-data" method="post">
-		Set a Profile Picture:<br>
-		<input type="file" name="file">
-		<input type="submit" value="Upload" name="upload" class='submitpost'>
-	</form>
+      <h4 style='color:rgb(217,54,54)'>Set a Profile Picture:</h4><br>
 
 	<?php
 	//UPDATE PROFILE PICTURE IN profilepics using temp_profilepics
@@ -345,9 +348,10 @@
 	  if(move_uploaded_file($_FILES["file"]["tmp_name"], $filepath))
 	  {
 		rename($filepath, "temp_profilepics/".$id.".png");
-		echo "<img src=\"temp_profilepics/".$id.".png\" height=150 width=150 />";
+		echo "<img src=\"temp_profilepics/".$id.".png\" height=150 width=150 style='margin-left:auto; margin-right:auto; display:block; border-radius:75px;'>";
+    //form3
 		echo "<form action=\"setup_pic_confirm.php\" method=\"post\">
-      <input type=\"submit\" class = 'submitpost'value=\"Save\" name=\"save\" id=\"btnsave\"> <br/>
+      <input type=\"submit\" class = 'submitpost' value=\"Save\" name=\"save\" id=\"btnsave\">
 		</form>";
 	  }
 	  else
@@ -357,12 +361,21 @@
 	}
 	else{
 	}
-	echo "<form method=\"POST\">";
-    echo "<input type=\"submit\" name=\"skip\" value=\"Skip\"/></form>";
-	if(isset($_POST["skip"])){
-		echo "<script> location.replace(\"landingpage.php\"); </script>";
-	}
-	?>
+  ?>
+
+  <form action="" enctype="multipart/form-data" method="post">
+
+  <input type="file" name="file" style="position:absolute; top:161; right:790;">
+  <input type="submit" value="Upload" name="upload" class='submitpost'>
+</form>
+
+<?php   //FORM 2
+echo "<form method=\"POST\">";
+  echo "<input class = 'submitpost' type=\"submit\" name=\"skip\" value=\"Skip\"/></form>";
+if(isset($_POST["skip"])){
+  echo "<script> location.replace(\"landingpage.php\"); </script>";
+}
+?>
 </div>
     <script>
 
