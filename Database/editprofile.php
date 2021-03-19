@@ -421,6 +421,18 @@
     $olduname = $oldunameres['username'];
     $unamecomm = "UPDATE comment SET username = '$username' WHERE username = '$olduname'";
     $unamecomres = mysqli_query($conn, $unamecomm);
+
+    $unameforum = "UPDATE forum SET username = '$username' WHERE username = '$olduname'";
+    $unameforumres = mysqli_query($conn, $unamecomm);
+
+    $unamelikes = "UPDATE likes SET username = '$username' WHERE username = '$olduname'";
+    $unamelikesres = mysqli_query($conn, $unamecomm);
+
+    $unamerep = "UPDATE report SET username = '$username' WHERE username = '$olduname'";
+    $unamerepres = mysqli_query($conn, $unamecomm);
+
+
+
 	  $insert_sql = "UPDATE account SET username = '$username', summary= '$summary' WHERE email = '$email'";
       $insert = mysqli_query($conn,$insert_sql);
 	  if($insert){
