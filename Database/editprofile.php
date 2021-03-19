@@ -1,5 +1,7 @@
 <html>
   <head>
+    <title>redDot: FEU Community Forum</title>
+    <link rel="shortcut icon" href="favicon.png">
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script
   src="https://apis.google.com/js/platform.js" async defer>
@@ -164,6 +166,7 @@
     cursor:pointer;
   }
   .searchbox{
+    transition-duration: 1s;
     background-color: rgba(0,0,0,0);
     border-top:none;
     border-left:none;
@@ -172,10 +175,12 @@
     margin-top:30px;
     margin-left:325px;
     height:2em;
-    width:50em;
+    width:6em;
     font-size:15pt;
+    color:white;
   }
   .searchbox:focus{
+    transition-duration: 1s;
     outline:none;
     border-left:none;
     border-top:none;
@@ -309,17 +314,32 @@
  text-align: center;
  color:white;
 }
+.textareass::-webkit-input-placeholder{
+ text-align: center;
+ color:white;
+}
 .textareas{
+  width: 50%;
+  padding:10px;
+  resize: none;
+  background-color:rgb(59,59,59);
+  color:white;
+  display:inline-block;
+  border-radius: 8px;
+}
+.textareass{
   width: 100%;
   padding:10px;
   resize: none;
   background-color:rgb(59,59,59);
   color:white;
+  display:inline-block;
+  border-radius: 10px;
 }
 .submitpost{
   transition-duration: 0.5s;
   margin-left:auto;
-  margin-right:auto;
+  margin-right:0;
   display:block;
 }
 .submitpost:hover{
@@ -347,7 +367,7 @@
 	    }
 	}
   echo "<div class=\"navbar\">
-  <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_1.png\" height=60 width=60></a>
+  <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_white.png\" height=60 width=60></a>
   <div class=\"dropdown\">
   <button class=\"profile\"><img class = \"ppic\" src='$profpic' width=65 height=65>
     <i class=\"fa fa-caret-down\"></i>
@@ -376,6 +396,10 @@
 	<script src="functions.js"></script>
 
   <?php
+  if(isset($_POST['search'])){
+		$search = $_POST['search_field'];
+		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
+	}
     $email = $_COOKIE["email"];
 	$pos = strpos($email,"@");
 	$id = substr($email, 0, $pos);
@@ -418,10 +442,13 @@
 	}
   ?>
     <div class='boxcontainer'>
+      <h1 style="color:rgb(217,54,54)">Edit Profile: </h1>
     <form action="editprofile.php" method="post" enctype="multipart/form-data" id="forms">
+    <label for="username">Username:</label>
 	  <input class = 'textareas' type="text" name="username" placeholder="Enter your username here..." autocomplete="off" required>
 	  <br>
-	  <textarea class = 'textareas' name="summary" rows="3" cols="40" placeholder="Enter your summary here..." ></textarea>
+    <label for="summary">Bio:</label>
+	  <textarea class = 'textareass' name="summary" rows="15" cols="" placeholder="Enter your bio here..." ></textarea>
 	  <br>
       <input type="submit" class="submitpost"name="next" value="Next">
 	</form>
@@ -449,7 +476,14 @@
 		location.replace("loginpage.php");
 	}
 	///////////////////////////////////////////////
-
+  searchform.addEventListener('input', () => {
+        if(search_field.value != ''){
+            searchbtn.removeAttribute('disabled');
+        }
+        else{
+            searchbtn.setAttribute('disabled', 'disabled');
+        }
+    });
   </script>
   </body>
  </html>
