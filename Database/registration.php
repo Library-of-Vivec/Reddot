@@ -1,10 +1,12 @@
 <html>
   <head>
+    <title>redDot: FEU Community Forum</title>
+    <link rel="shortcut icon" href="favicon.png">
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer> </script>
   <script src="functions.js"></script>
-  <link rel="stylesheet" type="text/css" href="regstyle.css"/>
+  <link rel="stylesheet" type="text/css" href="newreg.css">
   </head>
   <body>
   <script>
@@ -50,23 +52,22 @@
 	    echo "<script>location.replace(\"setup_pic.php\")</script>";
 	  }
 	  else{
-        echo "Username already exists!";
+        echo "<script>alert(\"Account already exists!\")</script>";
 	  }
 
 	}
   ?>
   <div class = "boxcontainer">
-  <div = "dispdiv">
+  <h1 style="color:rgb(217,54,54)">Registration: </h1>
     <form action="registration.php" method="post" enctype="multipart/form-data" id="forms">
 	  <label for="username">Username</label>
-	  <input type="text" class = "textareas" name="username" placeholder="Enter your username here..." autocomplete="off" required>
+	  <input type="text" class = "textareas" cols='10' name="username" placeholder="Enter your username here..." autocomplete="off" required>
 	  <br>
-	  <label for="summary">Summary: </label>
-	  <textarea name="summary" class = "textareas" rows="3" cols="40" placeholder="Enter your summary here..."></textarea>
+	  <label for="summary">Bio: </label>
+	  <textarea name="summary" class = "textareass" rows="15" cols="40" placeholder="Enter your bio here..."></textarea>
 	  <br>
-      <input class = "submitpost" type="submit" name="next" value="Next">
+      <input class = "submitpost" class = "submitpost" type="submit" name="next" value="Next">
 	</form>
-</div>
 </div>
   </body>
  </html>
