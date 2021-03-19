@@ -1,5 +1,7 @@
 <html>
   <head>
+    <title>redDot: FEU Community Forum</title>
+    <link rel="shortcut icon" href="favicon.png">
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script
   src="https://apis.google.com/js/platform.js" async defer>
@@ -164,9 +166,24 @@
     cursor:pointer;
   }
   .searchbox{
+    transition-duration: 1s;
     background-color: rgba(0,0,0,0);
     border-top:none;
     border-left:none;
+    border-right:none;
+    float:left;
+    margin-top:30px;
+    margin-left:325px;
+    height:2em;
+    width:6em;
+    font-size:15pt;
+    color:white;
+  }
+  .searchbox:focus{
+    transition-duration: 1s;
+    outline:none;
+    border-left:none;
+    border-top:none;
     border-right:none;
     float:left;
     margin-top:30px;
@@ -384,7 +401,7 @@
 	$TIME = date("G:i A");
 	$DATE = date("M d Y");
 	$DATE_F = $DATE.' at '.$TIME;
-    $sql = "INSERT INTO forum(title, post, email_user, date, username)
+  $sql = "INSERT INTO forum(title, post, email_user, date, username)
                         VALUES('$title', '$post', '$email', '$DATE_F', '$username')";
     $insert = mysqli_query($conn,$sql);
     if($insert){
