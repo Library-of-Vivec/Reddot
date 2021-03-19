@@ -1,5 +1,7 @@
 <html>
   <head>
+    <title>redDot: FEU Community Forum</title>
+    <link rel="shortcut icon" href="favicon.png">
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script
   src="https://apis.google.com/js/platform.js" async defer>
@@ -166,6 +168,7 @@
     cursor:pointer;
   }
   .searchbox{
+    transition-duration: 1s;
     background-color: rgba(0,0,0,0);
     border-top:none;
     border-left:none;
@@ -174,11 +177,12 @@
     margin-top:30px;
     margin-left:325px;
     height:2em;
-    width:50em;
+    width:6em;
     font-size:15pt;
     color:white;
   }
   .searchbox:focus{
+    transition-duration: 1s;
     outline:none;
     border-left:none;
     border-top:none;
@@ -204,7 +208,36 @@
     height:auto;
     color:rgb(182,182,180);
   }
+  .dispdiv2{
+    transition-duration: 0.5s;
+    background-color:rgb(130,130,130);
+    margin-top:0px;
+    margin-left:15%;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+    color:rgb(182,182,180);
+  }
   .dispdivcreate{
+    border-color:white;
+    background-color:rgb(59,59,59);
+    margin-top:50px;
+    margin-left:15%;
+    margin-bottom:25px;
+    float:left;
+    border-width: 1px;
+    border-style:solid;
+    padding:7px;
+    border-radius: 5px;
+    width:35%;
+    height:auto;
+  }
+
+  .dispdivcreate2{
     border-color:white;
     background-color:rgb(59,59,59);
     margin-top:0px;
@@ -346,19 +379,22 @@
     //DISPLAY USERNAME AND PROFILE PIC
   //CREATE POST BUTTON
   ?>
-  <form action = '' method = 'post'>
-  <div class="dispdivcreate"><button class = 'createpost'><a href="forumtest.php" style="text-decoration:none; cursor:text; color:black;">Create Post...</a></button></div>
   <?php
 	if(isset($_POST['search'])){
 		$search = $_POST['search_field'];
 		echo "<script>location.replace(\"searchpost.php?search_post=".$search."\")</script>";
 	}
+
+
+
 	$sql = "SELECT title, email_user, post, id, date, likes FROM forum ORDER BY id DESC";
   $result = mysqli_query($conn, $sql);
   if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
-
+    echo "<form action = '' method = 'post'>
+    <div class=\"dispdivcreate\">
+    <button class = 'createpost'><a href=\"forumtest.php\" style=\"text-decoration:none; cursor:text; color:black;\">Create Post...</a></button></div>";
     while($row = mysqli_fetch_assoc($result)){
-      echo "<div class = 'dispdiv'>";
+    echo "<div class = 'dispdiv'>";
 		echo "<div class=\"posts\">";
 		$value = $row["id"];
     $get_user = "SELECT username, profilepic from account WHERE email='".$row["email_user"]."'";
@@ -399,14 +435,15 @@
 			$count_comment = $count_comment + 1;
 		}
 		echo "<p>Comments: ".$count_comment."</p></div>";
-
+    echo "<input type='submit' name = 'delsub' value = 'Delete Posts' style='position: absolute; left:289px; top:225px;'>";
     echo "</div>";
     }
-    echo "<input type='submit' name = 'delsub' value = 'Delete Posts' style='position: absolute; left:289px; top:200px;'>";
     echo "</form>";
   }
   else{
-
+    echo "<form action = '' method = 'post'>
+    <div class=\"dispdivcreate2\">
+    <button class = 'createpost'><a href=\"forumtest.php\" style=\"text-decoration:none; cursor:text; color:black;\">Create Post...</a></button></div>";
     while($row = mysqli_fetch_assoc($result)){
       echo "<div class = 'dispdiv'>";
 		echo "<div class=\"posts\">";
