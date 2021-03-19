@@ -1,5 +1,7 @@
 <html>
   <head>
+    <title>redDot: FEU Community Forum</title>
+    <link rel="shortcut icon" href="favicon.png">
   <meta name ="google-signin-client_id" content ="464035173680-dosfku2qd8dig2681irv594bk8u8uhar.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer> </script>
   <script src="functions.js"></script>
