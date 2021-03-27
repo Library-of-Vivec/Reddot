@@ -366,33 +366,27 @@
 		//echo "</br>Profile Pic: <img src=\"".$row["profilepic"]."\" height=50 width=50>";
 	    }
 	}
-    echo "<div class=\"navbar\">
-    <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_white.png\" height=60 width=60></a>
-    <div class=\"dropdown\">
-    <button class=\"profile\"><img class = \"ppic\" src='$profpic' width=65 height=65>
-      <i class=\"fa fa-caret-down\"></i>
-      </button>
-      <div class=\"dropdown-content\">
-        <a href='profile.php?user=$username'>Profile</a>
-        <a href=\"editprofile.php\">Edit Profile</a>";
-        
-		if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
-			echo"<a href=\"reports.php\">Reported Posts</a>";
-		}
-		else{
-			echo"<a href=\"display_all.php\">Upvoted Posts</a>";
-		}
-        echo "<a onclick =\"signOut()\">Sign Out</a>
-        </div>
-    </div>";
-    echo "
-    <div class=\"search-container\">
-    <form action=\"\" method=\"post\" id=\"searchform\">
-      <input rows = '5' type=\"text\" name=\"search_field\" placeholder=\"Search...\" id=\"search_field\" class='searchbox'></input><br>
-      <button type=\"submit\" name=\"search\" value=\"Search\" id=\"searchbtn\" disabled=\"disabled\" class='searchbtn'></button>
-    </form>
-    </div>";
-    echo "</div>";
+  echo "<div class=\"navbar\">
+  <a href=\"landingpage.php\"><img class = \"logo\"src=\"RED_DOT_white.png\" height=60 width=60></a>
+  <div class=\"dropdown\">
+  <button class=\"profile\"><img class = \"ppic\" src='$profpic' width=65 height=65>
+    <i class=\"fa fa-caret-down\"></i>
+    </button>
+    <div class=\"dropdown-content\">
+      <a href='profile.php?user=$username'>Profile</a>
+      <a href=\"editprofile.php\">Edit Profile</a>
+      <a href=\"display_all.php\">Liked Posts</a>
+      <a onclick =\"signOut()\">Sign Out</a>
+      </div>
+  </div>";
+  echo "
+  <div class=\"search-container\">
+  <form action=\"\" method=\"post\" id=\"searchform\">
+    <input rows = '5' type=\"text\" name=\"search_field\" placeholder=\"Search...\" id=\"search_field\" class='searchbox'></input><br>
+    <button type=\"submit\" name=\"search\" value=\"Search\" id=\"searchbtn\" disabled=\"disabled\" class='searchbtn'></button>
+  </form>
+  </div>";
+  echo "</div>";
 	//DISPLAY USERNAME AND PROFILE PIC
   ?>
 
