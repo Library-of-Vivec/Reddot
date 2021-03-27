@@ -363,9 +363,15 @@
       </button>
       <div class=\"dropdown-content\">
         <a href='profile.php?user=$username'>Profile</a>
-        <a href=\"editprofile.php\">Edit Profile</a>
-        <a href=\"display_all.php\">Liked Posts</a>
-        <a onclick =\"signOut()\">Sign Out</a>
+        <a href=\"editprofile.php\">Edit Profile</a>";
+        
+		if($email == "201811471@feualabang.edu.ph" || $email == "201810285@feualabang.edu.ph" || $email == "201811597@feualabang.edu.ph" || $email == "201811285@feualabang.edu.ph"){
+			echo"<a href=\"reports.php\">Reported Posts</a>";
+		}
+		else{
+			echo"<a href=\"display_all.php\">Upvoted Posts</a>";
+		}
+        echo "<a onclick =\"signOut()\">Sign Out</a>
         </div>
     </div>";
     echo "

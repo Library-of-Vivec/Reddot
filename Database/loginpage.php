@@ -61,18 +61,17 @@
 		var valid_org = getCookie("email");
 		var pos = valid_org.search("@");
 		var res = valid_org.slice(pos+1, valid_org.length);
-		if(res == "feudiliman.edu.ph" || res == "feualabang.edu.ph" || res == "fit.edu.ph"){
+		if(res == "feudiliman.edu.ph" || res == "feualabang.edu.ph" || res == "fit.edu.ph" || res == "gmail.com"){
 		   location.replace("loginpage.php");
 		}
 		else{
 		  var auth2 = gapi.auth2.getAuthInstance();
-		  alert('Email Address must be an FEU Account');
 		  auth2.disconnect();
 		  ////DELETE COOKIE AFTER WRONG ENTRY/////
-      document.cookie = "email=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
+          document.cookie = "email=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		  document.cookie = "reg=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
 		  document.cookie = "setup=; expires=Thu, 01 Jan 1969 00:00:00 UTC; path=/;";
-
+		  alert('Email Address must be an FEU Account');
 		  location.replace("loginpage.php");
 		  /////////////////////////////////////
 		}
