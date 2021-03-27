@@ -380,7 +380,7 @@
 			echo"<a href=\"reports.php\">Reported Posts</a>";
 		}
 		else{
-			echo"<a href=\"display_all.php\">Liked Posts</a>";
+			echo"<a href=\"display_all.php\">Upvoted Posts</a>";
 		}
         echo "<a onclick =\"signOut()\">Sign Out</a>
         </div>
